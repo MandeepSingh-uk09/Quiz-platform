@@ -1,0 +1,112 @@
+
+.home{
+    box-sizing: border-box;
+    width: 60vw;
+    height: 80vh;
+    border-radius: 16px;
+    padding: 1rem;
+    border: 2px solid #000;
+    background: url("https://as1.ftcdn.net/v2/jpg/01/95/16/90/1000_F_195169024_R0XSeqsxvAcpdxVm0Grt3XFdhDWubwGs.jpg") ;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: space-between;    
+}
+
+.register{
+    width: 40%;
+    height: 100%;
+    background-color: rgb(25 68 74 );
+    border-radius: 16px 0 0 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.register form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+.register form input{
+    width: 80%;
+    height: 1.5rem;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: none;
+    background-color: white;
+    color: black;
+}
+.register form button{
+    width: 50%;
+    height: 2.5rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    border: none;
+    background: #aa00ff;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login{
+    width: 40%;
+    height: 100%;
+    background-color: rgb(25 68 74 );
+    border-radius: 0 16px 16px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
+}
+.login form input{
+    width: 80%;
+    height: 1.5rem;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: none;
+    background-color: white;
+    color: black;
+}
+.login form button{
+    width: 50%;
+    height: 2.5rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    border: none;
+    background: #aa00ff;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-state{
+    color: #bd44fa;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.home-pic{
+    width: 55%;
+    height: 100%;
+    background: url("	https://quiz.com/images/banner/banner-illustration-create.svg");
+    border-radius: 16px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgb(25 68 74 );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
