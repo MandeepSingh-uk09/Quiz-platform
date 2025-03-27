@@ -1,5 +1,6 @@
 const express = require('express');
-const { signupUserDao, loginUserDao } = require('../dao/user.dao');
+const { signupUserDao, loginUserDao, quizDao } = require('../dao/user.dao');
+const authMiddleware  = require('../middleware/user.auth');
 const router = express.Router();
 
 router.post('/signup', async (req, res) => {
@@ -22,9 +23,10 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/quiz/MCQ', async (req, res) => {
+router.post('/quiz/mcq', authMiddleware ,async (req, res) => {
     try {
         const MCQ = req.body;
+        console.log("req",MCQ);
         const savedQuiz = await quizDao(MCQ);
         res.status(200).json("Quiz Created");
     } catch (error) {

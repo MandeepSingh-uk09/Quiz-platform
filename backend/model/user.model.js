@@ -1,21 +1,16 @@
 const mongoose = require('mongoose');
 
 const QuizSchema = new mongoose.Schema({
-    type: {
-        type: String,
-        required: true,
-        enum: ['MCQ', 'True/False', 'Fill in the Blanks', 'Short Answer'], // Define allowed types
-    },
-    question: {
+    email: {
         type: String,
         required: true
     },
-    options: {
-        type: [String], // Only applicable for MCQs
-        required: function() { return this.type === 'MCQ'; } // Required only for MCQ type
-    },
-    correctAnswer: {
+    quizType: {
         type: String,
+        required: true
+    },
+    questions: {
+        type: Array,
         required: true
     }
 });
@@ -32,9 +27,10 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    },
-    quiz: [QuizSchema]
+    }
 })
 
 const User = mongoose.model('User', UserSchema);
+const Quiz = mongoose.model('Quizes', QuizSchema);
 module.exports = User;
+module.exports = Quiz;

@@ -1,7 +1,13 @@
 import React from 'react'
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import './quiz.css'
 const Quiz = () => {
+    const location = useLocation();
+    console.log(location.state);
+    const { quizType , email } = location.state || {};
+    console.log(quizType);
+    console.log(email);
     const [question, setQuestion] = useState('');
     const [options, setOptions] = useState(['', '', '', '']);
     const [correctAnswer, setCorrectAnswer] = useState('');
@@ -18,7 +24,7 @@ const Quiz = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        setQuestions(prevQuestions => [...prevQuestions, { question, options }]);
+        setQuestions(prevQuestions => [...prevQuestions, { question, options, correctAnswer }]);
         /* setQuestions([...questions,{ question, options }]); */       
         console.log([...questions, { question, options, correctAnswer }]);
         handleClear();
@@ -29,16 +35,19 @@ const Quiz = () => {
         setOptions(['', '', '', '']);
     };
 
-    const handleFinish = () => {
-        
+    const handleFinish = async () => {
+        console.log(questions);
         try {
-            const response = fetch("http://localhost:8080/api/auth/quiz/MCQ", {
+            const response = await fetch("http://localhost:8080/api/auth/quiz/mcq", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
-                    questions
+                    email: email,
+                    quizType: quizType,
+                    questions: questions                    
                 })
             });
             const result = response.json();
@@ -54,7 +63,7 @@ const Quiz = () => {
     <div className='quiz-page'>
         <div className='action-bar'>
             <div className='action'>{`<- Back`}</div>
-            <div className='action' onClick={()=>{handleFinish}}>Finish</div>
+            <div className='action' onClick={()=>{handleFinish()}}>Finish</div>
         </div>
         <div className='quiz-create'>            
             <div className='no-of-questions' >
@@ -62,7 +71,7 @@ const Quiz = () => {
                 <div className="questions-count">
                     {questions.map((question, index) => (
 
-                        <div className='que-count'>{index + 1}</div>
+                        <div className='que-count' key={index}>{index + 1}</div>
                     ))}
                     {/* <div className='que-count'>1</div>
                     <div className='que-count'>2</div>

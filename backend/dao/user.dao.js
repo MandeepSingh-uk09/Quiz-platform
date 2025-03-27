@@ -20,6 +20,7 @@ exports.loginUserDao = async (userData) => {
 
 exports.quizDao = async (userData) => {
     try {
+      console.log("dao",userData);
       return await quizService(userData);
     } catch (error) {
       console.error("Quiz DAO Error:", error.message);

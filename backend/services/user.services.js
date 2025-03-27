@@ -1,5 +1,8 @@
 const bcrypt = require('bcrypt');
 const User = require('../model/user.model');
+const Quiz = require('../model/user.model');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 exports.signupUserService = async ({username, email, password}) => {
     const existingUser = await User.findOne({ email });
@@ -21,6 +24,7 @@ exports.signupUserService = async ({username, email, password}) => {
 
 exports.loginUserService = async ({ email, password }) => {
     const existingUser = await User.findOne({ email });
+    
     if (!existingUser) {
       throw new Error('Email Does Not Exist');
     }
@@ -30,11 +34,15 @@ exports.loginUserService = async ({ email, password }) => {
       throw new Error('Invalid Credentials');
     }
 
+    const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, process.env.JWT_SECRET , { expiresIn: '1h' });
+    return { result: existingUser, token };
+
     return true;
 }
 
 exports.quizService = async (MCQ) => {
-    const newQuiz = new User(MCQ);
-    const savedQuiz = await newQuiz.save();
+    
+    const newQuiz = new Quiz(MCQ);
+    const savedQuiz = await newQuiz.save();    
     return savedQuiz;
 }
