@@ -30,7 +30,12 @@ const UserSchema = new mongoose.Schema({
     }
 })
 
-const User = mongoose.model('User', UserSchema);
+/* const User = mongoose.model('User', UserSchema);
 const Quiz = mongoose.model('Quizes', QuizSchema);
 module.exports = User;
-module.exports = Quiz;
+module.exports = Quiz; */
+
+const User = mongoose.model('User', UserSchema , "users");
+const Quiz = mongoose.model('Quiz', QuizSchema ,"quizes");
+
+module.exports = { User, Quiz };

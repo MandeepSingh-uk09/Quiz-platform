@@ -13,13 +13,13 @@ const Dashboard = () => {
                 navigate("/quiz", {state: {quizType: "MCQ", email: email}});
                 break;
             case "True/False":
-                navigate("/quiz");
+                navigate("/quiz", {state: {quizType: "True/False", email: email}});
                 break;
             case "Poll Quiz":
-                navigate("/quiz");
+                navigate("/quiz", {state: {quizType: "Poll Quiz", email: email}});
                 break;
             case "Open-Ended":
-                navigate("/quiz");
+                navigate("/quiz", {state: {quizType: "Open-Ended", email: email}});
                 break;
             default:
                 navigate("/quiz");

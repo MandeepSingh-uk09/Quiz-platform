@@ -1,6 +1,11 @@
 import React from 'react'
-
+import { useNavigate } from 'react-router-dom'
 const Navbar = () => {
+  const navigate =useNavigate();
+  const handleLogout= ()=>{
+    localStorage.clear();
+    navigate('/');
+  }
   return (
     <div className='navbar'>
         <div className='logo'>Quizer</div>
@@ -10,7 +15,7 @@ const Navbar = () => {
             <div className='nav-item'>Leaderboard</div>
             <div className='nav-item'>Profile</div>
         </div>
-        <div className='nav-item'>Logout</div>
+        <div className='nav-item' onClick={()=>{handleLogout()}}>Logout</div>
     </div>
   )
 }

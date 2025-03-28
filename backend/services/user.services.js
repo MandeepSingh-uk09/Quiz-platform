@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
-const User = require('../model/user.model');
-const Quiz = require('../model/user.model');
+const { User , Quiz} = require('../model/user.model');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -36,8 +35,6 @@ exports.loginUserService = async ({ email, password }) => {
 
     const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, process.env.JWT_SECRET , { expiresIn: '1h' });
     return { result: existingUser, token };
-
-    return true;
 }
 
 exports.quizService = async (MCQ) => {

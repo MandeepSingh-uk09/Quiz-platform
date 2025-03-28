@@ -34,4 +34,37 @@ router.post('/quiz/mcq', authMiddleware ,async (req, res) => {
     }
 });
 
+router.post('/quiz/truefalse', authMiddleware ,async (req, res)=>{
+    try {
+        const trueFalseQuiz = req.body;
+        console.log("req", trueFalseQuiz);
+        const savedQuiz = await quizDao(trueFalseQuiz);
+        res.status(200).json("True/False Quiz Created");
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+router.post('/quiz/poll', authMiddleware ,async (req, res)=>{
+    try {
+        const trueFalseQuiz = req.body;
+        console.log("req", trueFalseQuiz);
+        const savedQuiz = await quizDao(trueFalseQuiz);
+        res.status(200).json("Poll Quiz Created");
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+router.post('/quiz/openended', authMiddleware ,async (req, res)=>{
+    try {
+        const trueFalseQuiz = req.body;
+        console.log("req", trueFalseQuiz);
+        const savedQuiz = await quizDao(trueFalseQuiz);
+        res.status(200).json("Open-ended Quiz Created");
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
 module.exports = router;
