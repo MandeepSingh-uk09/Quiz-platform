@@ -3,7 +3,7 @@ import { useState , useEffect} from 'react';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import './detailedquiz.css'
-const Detailedquiz = ({visibility,setVisibility ,quiztype}) => {
+const Detailedquiz = ({visibility,setVisibility ,quiztype, email}) => {
 
   const [quizzes, setQuizzes] = useState([]);
   const [questions, setQuestions] =useState([])
@@ -17,7 +17,7 @@ const Detailedquiz = ({visibility,setVisibility ,quiztype}) => {
 
   const fetchQuizzes = async()=>{
 
-    const response = await fetch(`http://localhost:8080/api/auth/quizzes/by-type?type=${quiztype}`)
+    const response = await fetch(`http://localhost:8080/api/auth/quizzes/by-type?type=${quiztype}&email=${email}`)
 
     const data = await response.json();
     console.log(data);
@@ -59,7 +59,7 @@ const Detailedquiz = ({visibility,setVisibility ,quiztype}) => {
           {quizzes.length > 0 ? (
             quizzes.map((quiz , index) => (
               <div className='dq-lists' key={quiz._id} onClick={()=>{handleSelect(index)}}>
-                <div className='list-desc' >{quiz.description || quiz._id}</div>
+                <div className='list-desc' >{quiz.quizDescription || quiz._id}</div>
                 <div className="list-del">
                   <IconButton aria-label="delete" onClick={() => handleDeleteQuiz(quiz._id)}>
                     <DeleteIcon />

@@ -4,6 +4,7 @@ import "./landing.css"
 import Navbar from '../components/Navbar'
 import { data } from 'react-router-dom';
 import Detailedquiz from '../components/Detailedquiz';
+import Takequiz from '../components/Takequiz';
 const Landing = () => {
 
     const navigate =useNavigate();
@@ -12,13 +13,16 @@ const Landing = () => {
     const [visibility,setVisibility] = useState("false");
     const [quiztype,setQuiztype] =useState();
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const email = user.email;
+
     useEffect(()=>{
-        quizdata();
+        quizdata(email);
     },[visibility])
 
-    const quizdata = async ()=>{
+    const quizdata = async (email)=>{
         try{
-            const response= await fetch("http://localhost:8080/api/auth/quizzes");
+            const response= await fetch(`http://localhost:8080/api/auth/quizzes?email=${email}`);
             if(response){
                 const data =await response.json();
                 console.log(data);
@@ -45,9 +49,12 @@ const Landing = () => {
             </div>
             <div className='quiz-btn' onClick={()=>{navigate('/dashboard')}}>Create Quiz</div>
         </div>
-        <div className='assigned-quizzes'>assigned quizes</div>
+        <div className='assigned-quizzes'>
+            <div className='aq-heading'>Take Quiz</div>
+            <Takequiz email={email}/>
+        </div>
       </div>
-      {visibility==="true"? <Detailedquiz visibility={visibility} setVisibility={setVisibility} quiztype={quiztype}/>: ""}
+      {visibility==="true"? <Detailedquiz visibility={visibility} setVisibility={setVisibility} quiztype={quiztype} email={email}/>: ""}
     </div>
   )
 }

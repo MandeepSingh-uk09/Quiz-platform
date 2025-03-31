@@ -12,7 +12,7 @@ const Navbar = () => {
         <div className='nav-items'>
             <div className='nav-item' onClick={()=>{navigate('/landing')}}>Home</div>
             <div className='nav-item' onClick={()=>{navigate('/dashboard')}}>Quiz</div>
-            <div className='nav-item'>Leaderboard</div>
+            <div className='nav-item' onClick={()=>{navigate('/leaderboard')}}>Leaderboard</div>
             <div className='nav-item'>Profile</div>
         </div>
         <div className='nav-item' onClick={()=>{handleLogout()}}>Logout</div>

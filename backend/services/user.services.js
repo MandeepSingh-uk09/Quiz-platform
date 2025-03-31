@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { User , Quiz} = require('../model/user.model');
+const { User , Quiz ,QuizResult} = require('../model/user.model');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -42,4 +42,13 @@ exports.quizService = async (MCQ) => {
     const newQuiz = new Quiz(MCQ);
     const savedQuiz = await newQuiz.save();    
     return savedQuiz;
+}
+
+exports.quizScoreService=async (result)=>{
+
+  console.log("here");
+  const score = new QuizResult(result);
+  const savedScore = await score.save();
+    
+  return savedScore;
 }

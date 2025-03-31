@@ -5,21 +5,22 @@ import Navbar from '../components/Navbar'
 const Dashboard = () => {
 
     const user = JSON.parse(localStorage.getItem('user'));
+    const username =user.username;
     const email = user.email;
     const navigate = useNavigate();
     const handleClick = (quizType) => {
         switch(quizType){
             case "MCQ":
-                navigate("/quiz", {state: {quizType: "MCQ", email: email}});
+                navigate("/quiz", {state: {quizType: "MCQ", email: email , username: username}});
                 break;
             case "True/False":
-                navigate("/quiz", {state: {quizType: "True/False", email: email}});
+                navigate("/quiz", {state: {quizType: "True/False", email: email, username: username}});
                 break;
             case "Poll Quiz":
-                navigate("/quiz", {state: {quizType: "Poll Quiz", email: email}});
+                navigate("/quiz", {state: {quizType: "Poll Quiz", email: email, username: username}});
                 break;
             case "Open-Ended":
-                navigate("/quiz", {state: {quizType: "Open-Ended", email: email}});
+                navigate("/quiz", {state: {quizType: "Open-Ended", email: email, username: username}});
                 break;
             default:
                 navigate("/quiz");

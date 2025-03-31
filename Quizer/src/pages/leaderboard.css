@@ -1,0 +1,252 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+  background-color: #fcfcfc;
+}
+
+.leaderboard-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #e6e6e6;
+  color: #1e293b;
+  overflow: hidden;
+}
+
+.leaderboard-content {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  padding: 20px;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.leaderboard-sidebar {
+  flex: 0 0 25%;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  max-height: 83vh;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+.leaderboard-results {
+  flex-grow: 1;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  max-height: 85vh;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+.leaderboard-title,
+.leaderboard-results-title {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #334155;
+  border-bottom: 2px solid #cbd5e1;
+  padding-bottom: 5px;
+}
+
+.leaderboard-list,
+.leaderboard-items {
+  list-style: none;
+  padding: 0;
+}
+
+.leaderboard-category {
+  background: rgba(100, 116, 139, 0.1);
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+}
+
+.leaderboard-item {
+  font-size: 14px;
+  padding: 8px 12px;
+  background: rgba(203, 213, 225, 0.3);
+  border-radius: 5px;
+  margin-top: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leaderboard-item.selected {
+  background-color: #006e61;
+  color: white;
+  font-weight: bold;
+}
+
+.leaderboard-quiz-description {
+  font-size: 16px;
+  text-align: center;
+  color: #64748b;
+  margin-top: 5px;
+}
+
+.leaderboard-scores {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-height: 65vh;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.score-card {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-score {
+  background: #1e293b;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.user-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.poll-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.poll-access-count {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.leaderboard-poll-container {
+  width: 100%;
+  margin: auto;
+  padding: 15px;
+  background: #ededed;
+  margin-bottom: 2rem;
+
+}
+
+.leaderboard-poll-question {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: left;
+  color: black;
+  border-bottom: 1px solid black;
+}
+
+/* Option text above progress bar */
+.leaderboard-poll-options {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.leaderboard-option-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: black;
+}
+
+/* Progress Bar */
+.leaderboard-poll-vote {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  border-radius: 15px;
+  overflow: hidden;
+  background: #e5e7eb;
+  box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-poll-option {
+  height: 20px;
+  transition: width 0.6s ease-in-out;
+}
+
+.leaderboard-poll-yes {
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+}
+
+.leaderboard-poll-no {
+  background: linear-gradient(90deg, #dc2626, #ef4444);
+}
+
+.open-ended-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 65vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+  width: 100%;
+}
+
+.open-ended-card {
+  background: #dedede;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.response-item {
+  background: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .leaderboard-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .leaderboard-sidebar {
+    flex: none;
+    width: 100%;
+    max-height: 30vh;
+    overflow-y: auto;
+  }
+}

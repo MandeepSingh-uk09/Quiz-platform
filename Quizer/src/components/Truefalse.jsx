@@ -9,24 +9,28 @@ const Truefalse = () => {
 
     const location = useLocation();
     console.log(location.state);
-    const { quizType , email } = location.state || {};
+    const { quizType , email , username} = location.state || {};
     console.log(quizType);
 
     const navigate=useNavigate();
-
     const [selectedOption, setSelectedOption] = useState("True");
+    const [correctAnswer, setCorrectanswer] = useState("True");
     const [question,setQuestion]=useState('');
+    const [options, setOptions] = useState(['True', 'False']);
     const [questions,setQuestions]=useState([]);
+
+    const[quizDescription,setQuizdescription]=useState();
+    const[popUp,setPopup] =useState(false);
 
     const handleAdd=(e)=>{
         e.preventDefault();
-        setQuestions([...questions,{question,selectedOption}]);
-        console.log([...questions,{question,selectedOption}]);
+        setQuestions([...questions,{question,options,correctAnswer}]);
+        console.log([...questions,{question,options,correctAnswer}]);
         handleClear();
     }
     const handleClear = () => {
         setQuestion('');
-        setSelectedOption('True');
+        setCorrectanswer('True');
     };
 
     const handleFinish = async () => {
@@ -41,6 +45,8 @@ const Truefalse = () => {
                 body: JSON.stringify({
                     email: email,
                     quizType: quizType,
+                    username: username,
+                    quizDescription: quizDescription,
                     questions: questions                    
                 })
             });
@@ -53,6 +59,8 @@ const Truefalse = () => {
     };
 
   return (
+    <>
+    {!popUp===false ?
     <div className='quiz-page'>
         <Submitnav  handleFinish={handleFinish}/>
         <div className='quiz-create'>          
@@ -68,31 +76,32 @@ const Truefalse = () => {
                     onChange={(e)=>setQuestion(e.target.value)}
                     value={question}
                 />
-                <div className='options'>
-                click on the correct option
-                <label htmlFor="true" className={`tf-label ${selectedOption === "True" ? "selected" : ""}`}>
-                <input
-                        type="radio"
-                        id="true"
-                        name="TF"
-                        value="True"
-                        checked={selectedOption === "True"}
-                        onChange={(e) => setSelectedOption(e.target.value)}
-                    />
-                    True
-                </label>                
-                <label htmlFor="false" className={`tf-label ${selectedOption === "False" ? "selected" : ""}`}>
-                    <input
-                        type="radio"
-                        id="false"
-                        name="TF"
-                        value="False"
-                        checked={selectedOption === "False"}
-                        onChange={(e) => setSelectedOption(e.target.value)}
-                    />
-                    False
-                </label>
+                <div className="options">
+                    Click on the correct option
+                    <label htmlFor="true" className={`tf-label ${selectedOption === "True" ? "selected" : ""}`}>
+                        <input
+                            type="radio"
+                            id="true"
+                            name="TF"
+                            value="True"
+                            checked={selectedOption === "True"}
+                            onChange={(e) => { setCorrectanswer(e.target.value); setSelectedOption("True"); }}
+                        />
+                        True
+                    </label>                
+                    <label htmlFor="false" className={`tf-label ${selectedOption === "False" ? "selected" : ""}`}>
+                        <input
+                            type="radio"
+                            id="false"
+                            name="TF"
+                            value="False"
+                            checked={selectedOption === "False"}
+                            onChange={(e) => { setCorrectanswer(e.target.value); setSelectedOption("False"); }}
+                        />
+                        False
+                    </label>
                 </div>
+
                 <div>Note: By default the value is true.</div>
             </div>
             <div className='save-next'>
@@ -102,6 +111,14 @@ const Truefalse = () => {
         </form>
         </div>
     </div>
+    :
+    <div className='quiz-description'>
+        <h3>Enter your Quiz Description here</h3>
+        <input type="text" placeholder='write...' onChange={(e)=>{setQuizdescription(e.target.value)}}/>
+        <button onClick={()=>{setPopup(true)}}>Next</button>
+    </div>
+    }   
+    </>
   )
 }
 

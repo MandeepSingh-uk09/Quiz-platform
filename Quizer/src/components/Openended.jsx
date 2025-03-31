@@ -10,11 +10,13 @@ const Openended = () => {
     const navigate = useNavigate();
     const location = useLocation();
     console.log(location.state);
-    const { quizType , email } = location.state || {};
-    console.log(quizType);
-    console.log(email);
+    const { quizType , email , username} = location.state || {};
+    
     const [question, setQuestion] = useState('');
-    const [questions, setQuestions] = useState([]);        
+    const [questions, setQuestions] = useState([]);   
+   
+    const[quizDescription,setQuizdescription]=useState();
+    const[popUp,setPopup] =useState(false);
     
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -40,6 +42,8 @@ const Openended = () => {
                 body: JSON.stringify({
                     email: email,
                     quizType: quizType,
+                    username: username,
+                    quizDescription: quizDescription,
                     questions: questions                    
                 })
             });
@@ -55,6 +59,7 @@ const Openended = () => {
 
   return (
     <>
+    {!popUp===false ?
     <div className='quiz-page'>
         <Submitnav handleFinish={handleFinish} />
         <div className='quiz-create'>            
@@ -78,10 +83,14 @@ const Openended = () => {
             </div>
         </form>
         </div>
-    </div>          
-
-            <div className='quiz-title'></div>
-            <div className='quiz-description'></div>
+    </div>
+    :
+    <div className='quiz-description'>
+        <h3>Enter your Quiz Description here</h3>
+        <input type="text" placeholder='write...' onChange={(e)=>{setQuizdescription(e.target.value)}}/>
+        <button onClick={()=>{setPopup(true)}}>Next</button>
+    </div>
+    }
     </>
   )
 }

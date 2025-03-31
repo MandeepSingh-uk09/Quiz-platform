@@ -1,42 +1,62 @@
-import React from 'react'
-import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import './quiz.css';
+import Questions from './Questions';
+import Submitnav from './Submitnav';
 
-import './quiz.css'
-import Questions from './Questions'
-import Submitnav from './Submitnav'
 const Poll = () => {
-    
     const navigate = useNavigate();
     const location = useLocation();
     console.log(location.state);
-    const { quizType , email } = location.state || {};
-    console.log(quizType);
-    console.log(email);
+
+    const { quizType, email, username } = location.state || {};
+
     const [question, setQuestion] = useState('');
     const [options, setOptions] = useState(['', '']);
     const [questions, setQuestions] = useState([]);
-    
+    const [quizDescription, setQuizDescription] = useState('');
+    const [popUp, setPopup] = useState(false);
+
+    const accessCount = 0;
+
+    // Handle option input changes
     const handleOptionChange = (index, value) => {
         const newOptions = [...options];
         newOptions[index] = value;
-        
         setOptions(newOptions);
     };
-    
+
+    // Add question to the list
     const handleSubmit = (e) => {
         e.preventDefault();
-        setQuestions(prevQuestions => [...prevQuestions, { question, options}]);
-        /* setQuestions([...questions,{ question, options }]); */       
-        console.log([...questions, { question, options}]);
+
+        if (!question.trim() || options.some(option => !option.trim())) {
+            alert("Please enter a question and options.");
+            return;
+        }
+
+        const formattedOptions = options.map(option => ({
+            text: option,
+            votes: 0 // Initialize votes to 0
+        }));
+
+        setQuestions(prevQuestions => [
+            ...prevQuestions,
+            { question, options: formattedOptions }
+        ]);
+
+        console.log([...questions, { question, options: formattedOptions }]);
+
         handleClear();
     };
 
+    // Reset input fields after adding a question
     const handleClear = () => {
         setQuestion('');
         setOptions(['', '']);
     };
 
+    // Submit final quiz
     const handleFinish = async () => {
         console.log(questions);
         try {
@@ -47,64 +67,74 @@ const Poll = () => {
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
-                    email: email,
-                    quizType: quizType,
-                    questions: questions                    
+                    email,
+                    quizType,
+                    username,
+                    quizDescription,
+                    accessCount,
+                    questions
                 })
             });
+
             const result = await response.json();
             console.log(result);
             navigate('/dashboard');
-            
+        } catch (error) {
+            console.error("Error submitting quiz:", error);
         }
-        catch (error) {
-            console.log(error);
-        }
-    }
+    };
 
-  return (
-    <>
-    <div className='quiz-page'>
-        <Submitnav handleFinish={handleFinish} />
-        <div className='quiz-create'>            
-            <Questions questions={questions} />
-            <form className='add-question' onSubmit={handleSubmit}>
-            <div>
-                <div className='question-type'>{questions.length+1} Poll</div>
-
-                <input 
-                    type='text' 
-                    className='question' 
-                    placeholder='Enter your question' 
-                    value={question} 
-                    onChange={(e) => setQuestion(e.target.value)}
-                />
-                <div className='options'>
-                    {options.map((option, index) => (
-                        <input 
-                            key={index} 
-                            type='text' 
-                            className='poll-option' 
-                            placeholder={`Option ${index + 1}`} 
-                            value={option} 
-                            onChange={(e) => handleOptionChange(index, e.target.value)
-                            }
-                        />
-                    ))}
+    return (
+        <>
+            {!popUp ? (
+                <div className='quiz-description'>
+                    <h3>Enter your Quiz Description here</h3>
+                    <input
+                        type="text"
+                        placeholder='Write here...'
+                        value={quizDescription}
+                        onChange={(e) => setQuizDescription(e.target.value)}
+                    />
+                    <button onClick={() => setPopup(true)}>Next</button>
                 </div>
-            </div>
-            <div className='save-next'>
-                <button type='button' onClick={handleClear}>Clear</button>
-                <button type='submit'>Add</button>
-            </div>
-        </form>
-        </div>
-    </div>          
+            ) : (
+                <div className='quiz-page'>
+                    <Submitnav handleFinish={handleFinish} />
+                    <div className='quiz-create'>
+                        <Questions questions={questions} />
+                        <form className='add-question' onSubmit={handleSubmit}>
+                            <div>
+                                <div className='question-type'>{questions.length + 1} Poll</div>
+                                <input
+                                    type='text'
+                                    className='question'
+                                    placeholder='Enter your question'
+                                    value={question}
+                                    onChange={(e) => setQuestion(e.target.value)}
+                                />
+                                <div className='options'>
+                                    {options.map((option, index) => (
+                                        <input
+                                            key={index}
+                                            type='text'
+                                            className='poll-option'
+                                            placeholder={`Option ${index + 1}`}
+                                            value={option}
+                                            onChange={(e) => handleOptionChange(index, e.target.value)}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                            <div className='save-next'>
+                                <button type='button' onClick={handleClear}>Clear</button>
+                                <button type='submit'>Add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+};
 
-            <div className='quiz-title'></div>
-            <div className='quiz-description'></div>
-    </>
-  )
-}
-
-export default Poll
+export default Poll;
