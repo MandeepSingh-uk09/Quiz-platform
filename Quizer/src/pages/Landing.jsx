@@ -2,7 +2,6 @@ import React, { useState , useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import "./landing.css"
 import Navbar from '../components/Navbar'
-import { data } from 'react-router-dom';
 import Detailedquiz from '../components/Detailedquiz';
 import Takequiz from '../components/Takequiz';
 const Landing = () => {
@@ -38,7 +37,7 @@ const Landing = () => {
       <Navbar />
       <div className='quiz-status'>
         <div className='your-quizzes'>
-            <h2>You have created,..</h2>
+            <h2> {user.username}, you have created...</h2>
             <div className='quizs-detail'>
                 {quizcount.map((quiz, index) => (
                     <div key={index} className="quizs-card" onClick={()=>{setVisibility("true");setQuiztype(quiz.quizType)}}>

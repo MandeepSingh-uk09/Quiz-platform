@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import './quiz.css'
+import "./mcq.css"
 import Questions from './Questions'
 import Submitnav from './Submitnav'
 const Mcq = () => {
@@ -16,6 +16,8 @@ const Mcq = () => {
     const [correctAnswer, setCorrectAnswer] = useState('');
     const [questions, setQuestions] = useState([]);
 
+    const [optionindex,setOptionindex]=useState(0)
+
     const[quizDescription,setQuizdescription]=useState();
     const[popUp,setPopup] =useState(false);
     
@@ -28,6 +30,16 @@ const Mcq = () => {
         setOptions(newOptions);
     };
     
+    const handleClick = (index) =>{
+        console.log(index);
+        const newOptions = [...options];    
+        console.log(newOptions[index]);
+        setOptionindex(index)
+        setCorrectAnswer(newOptions[index]);
+        
+    }
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setQuestions(prevQuestions => [...prevQuestions, { question, options, correctAnswer }]);
@@ -71,51 +83,56 @@ const Mcq = () => {
   return (
     <>
     {!popUp===false ?
-    <div className='quiz-page'>
+        <div className='mcq-quiz-page'>
         <Submitnav handleFinish={handleFinish} />
-        <div className='quiz-create'>            
+        <div className='mcq-quiz-create'>    
+                    
             <Questions questions={questions} />            
-            <form className='add-question' onSubmit={handleSubmit}>
-            <div>
-                <div className='question-type'>{questions.length+1} MCQ</div>
-
-                <input 
-                    type='text' 
-                    className='question' 
-                    placeholder='Enter your question' 
-                    value={question} 
-                    onChange={(e) => setQuestion(e.target.value)}
-                />
-                <div className='options'>
-                    {options.map((option, index) => (
-                        <input 
-                            key={index} 
-                            type='text' 
-                            className='option' 
-                            placeholder={`Option ${index + 1}`} 
-                            value={option} 
-                            onChange={(e) => handleOptionChange(index, e.target.value)
-                            }
-                        />
-                    ))}
+            <form className='mcq-add-question' onSubmit={handleSubmit}>
+                <div>
+                    <div className='mcq-question-type'>{questions.length + 1} MCQ</div>
+                    <input 
+                        type='text' 
+                        className='mcq-question' 
+                        placeholder='Enter your question' 
+                        value={question} 
+                        onChange={(e) => setQuestion(e.target.value)}
+                    />
+                    <div className='mcq-options'>
+                        {options.map((option, index) => (
+                            <input 
+                                key={index} 
+                                type='text' 
+                                className={`mcq-option ${optionindex === index ? 'green': ''}`} 
+                                placeholder={`Option ${index + 1}`} 
+                                value={option} 
+                                onChange={(e) => handleOptionChange(index, e.target.value)}
+                                onDoubleClick={()=>{handleClick(index)}}
+                            />
+                        ))}
+                    </div>
+                    <div>Note: Double click to choose the correct answer, <br></br>  
+                     <strong>By defaul the first option is correctanswer.</strong>
+                    </div>
                 </div>
-                <div>Note: Place the correct answer as the first option.</div>
-            </div>
-            <div className='save-next'>
-                <button type='button' onClick={handleClear}>Clear</button>
-                <button type='submit'>Add</button>
-            </div>
-            
-            </form>
-            
+                <div className='mcq-save-next'>
+                    <button type='button' onClick={handleClear}>Clear</button>
+                    <button type='submit'>Add</button>
+                </div>         
+            </form>            
         </div>
     </div>
     :
-    <div className='quiz-description'>
+    <div className='mcq-quiz-description'>
         <h3>Enter your Quiz Description here</h3>
-        <input type="text" placeholder='write...' onChange={(e)=>{setQuizdescription(e.target.value)}}/>
-        <button onClick={()=>{setPopup(true)}}>Next</button>
+        <input 
+            type="text" 
+            placeholder='write...' 
+            onChange={(e) => setQuizdescription(e.target.value)}
+        />
+        <button onClick={() => setPopup(true)}>Next</button>
     </div>
+
     }        
     </>
   )

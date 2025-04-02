@@ -1,0 +1,61 @@
+/* Action Bar */
+.action-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    height: 10vh;
+    background-color:  #006e61; /* Dark Teal */
+    padding: 1rem 2rem;
+  }
+  
+  /* Buttons */
+  .action {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Back Button */
+  .back-btn {
+    background: transparent;
+    box-shadow: none;
+  }
+    
+  .back-btn:hover{
+    background: linear-gradient(135deg, #10b981, #059669);
+  }
+  /* Finish Button */
+  .finish-btn {
+    background: linear-gradient(135deg, #10b981, #059669); /* Green Gradient */
+  }
+  
+  .finish-btn:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: scale(1.05);
+  }
+  
+  /* Mobile Responsiveness */
+  @media (max-width: 500px) {
+    .action-bar {
+      padding: 1rem;
+    }
+
+   
+    .action {
+      width: 100%;
+      max-width: 150px;
+    }
+  }
+  

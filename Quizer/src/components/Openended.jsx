@@ -1,8 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-
-import './quiz.css'
+import "./openended.css"
 import Questions from './Questions'
 import Submitnav from './Submitnav'
 const Openended = () => {
@@ -59,38 +58,54 @@ const Openended = () => {
 
   return (
     <>
-    {!popUp===false ?
-    <div className='quiz-page'>
-        <Submitnav handleFinish={handleFinish} />
-        <div className='quiz-create'>            
-            <Questions questions={questions} />
-            <form className='add-question' onSubmit={handleSubmit}>
-            <div>
-                <div className='question-type'>{questions.length+1} Open-Ended</div>
+    {!popUp === false ? (
+  <div className='oe-quiz-page'>
+    <Submitnav handleFinish={handleFinish} />
+    <div className='oe-quiz-create'>
+      <Questions questions={questions} />
+      <form className='oe-add-question' onSubmit={handleSubmit}>
+        <div>
+          <div className='oe-question-type'>
+            {questions.length + 1} Open-Ended
+          </div>
 
-                <input 
-                    type='text' 
-                    className='oe-question' 
-                    placeholder='Enter your question' 
-                    value={question} 
-                    onChange={(e) => setQuestion(e.target.value)}
-                />
-                
-            </div>
-            <div className='save-next'>
-                <button type='button' onClick={handleClear}>Clear</button>
-                <button type='submit'>Add</button>
-            </div>
-        </form>
+          <input
+            type='text'
+            className='oe-question'
+            placeholder='Enter your question'
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+          />
         </div>
+        <div className='oe-save-next'>
+          <button type='button' onClick={handleClear}>
+            Clear
+          </button>
+          <button type='submit'>Add</button>
+        </div>
+      </form>
     </div>
-    :
-    <div className='quiz-description'>
-        <h3>Enter your Quiz Description here</h3>
-        <input type="text" placeholder='write...' onChange={(e)=>{setQuizdescription(e.target.value)}}/>
-        <button onClick={()=>{setPopup(true)}}>Next</button>
-    </div>
-    }
+  </div>
+) : (
+  <div className='oe-quiz-description'>
+    <h3>Enter your Quiz Description here</h3>
+    <input
+      type='text'
+      placeholder='write...'
+      onChange={(e) => {
+        setQuizdescription(e.target.value);
+      }}
+    />
+    <button
+      onClick={() => {
+        setPopup(true);
+      }}
+    >
+      Next
+    </button>
+  </div>
+)}
+
     </>
   )
 }

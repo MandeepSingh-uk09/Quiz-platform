@@ -1,31 +1,30 @@
-import React from 'react'
-import { useState } from 'react'
-import Login from '../components/Login'
-import "./home.css"
-import Register from '../components/Register'
+import React, { useState } from 'react';
+import Login from '../components/Login';
+import Register from '../components/Register';
+import "./home.css";
+
 const Home = () => {
+    const [isRegister, setIsRegister] = useState(true);
 
-    const [isRegister, setIsRegister] = useState(true)
+    const toggleAuth = () => {
+        setIsRegister(!isRegister);
+    };
 
-    const handleLogin = () => {
-        setIsRegister(!isRegister)
-    }
+    return (   
+        <div className="auth-container">
+            {isRegister ? 
+                <>
+                    <div className='auth-image'></div>
+                    <Login toggleAuth={toggleAuth} />
+                </>
+            : 
+                <>
+                    <Register toggleAuth={toggleAuth} />
+                    <div className='auth-image'></div>
+                </>
+            }
+        </div>
+    );
+};
 
-  return (   
-    <div className="home">
-      {isRegister ? 
-        <>
-          <div className='home-pic'></div>
-          <Login handleLogin={handleLogin} />
-        </>
-       : 
-        <>
-          <Register handleLogin={handleLogin} />
-          <div className='home-pic'></div>
-        </>
-      }
-    </div>
-  )
-}
-
-export default Home
+export default Home;

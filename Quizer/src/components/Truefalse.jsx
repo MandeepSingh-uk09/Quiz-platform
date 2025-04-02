@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import './quiz.css'
+import "./truefalse.css"
 import Submitnav from './Submitnav'
 import Questions from './Questions'
 
@@ -61,22 +61,22 @@ const Truefalse = () => {
   return (
     <>
     {!popUp===false ?
-    <div className='quiz-page'>
-        <Submitnav  handleFinish={handleFinish}/>
-        <div className='quiz-create'>          
+    <div className='tf-quiz-page'>
+        <Submitnav handleFinish={handleFinish}/>
+        <div className='tf-quiz-create'>          
             <Questions questions={questions} />  
-            <form className='add-question' onSubmit={handleAdd}>
+            <form className='tf-add-question' onSubmit={handleAdd}>
             <div>
-                <div className='question-type'>True/False</div>
+                <div className='tf-question-type'>{questions.length+1}. True/False</div>
                 
                 <input 
                     type='text' 
-                    className='question' 
+                    className='tf-question' 
                     placeholder='Enter your question' 
                     onChange={(e)=>setQuestion(e.target.value)}
                     value={question}
                 />
-                <div className="options">
+                <div className="tf-options">
                     Click on the correct option
                     <label htmlFor="true" className={`tf-label ${selectedOption === "True" ? "selected" : ""}`}>
                         <input
@@ -104,7 +104,7 @@ const Truefalse = () => {
 
                 <div>Note: By default the value is true.</div>
             </div>
-            <div className='save-next'>
+            <div className='tf-save-next'>
                 <button type='button'>Clear</button>
                 <button type='submit'>Add</button>
             </div>
@@ -112,12 +112,13 @@ const Truefalse = () => {
         </div>
     </div>
     :
-    <div className='quiz-description'>
+    <div className='tf-quiz-description'>
         <h3>Enter your Quiz Description here</h3>
         <input type="text" placeholder='write...' onChange={(e)=>{setQuizdescription(e.target.value)}}/>
         <button onClick={()=>{setPopup(true)}}>Next</button>
     </div>
-    }   
+}
+   
     </>
   )
 }

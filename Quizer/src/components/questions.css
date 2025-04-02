@@ -1,0 +1,121 @@
+.no-of-questions {
+    width: 10%;
+    min-width: 80px;
+    background-color: #fff;
+    height: 90vh;
+    border-right: 2px solid #004d40;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+  }
+  
+  /* Heading */
+  .que-heading {
+    font-size: 1rem;
+    font-weight: bold;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #004d40;
+    color: #004d40;
+    text-align: center;
+    width: 100%;
+  }
+  
+  /* Questions Number Section */
+  .questions-count {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0.5rem ;
+    color: black;
+    max-height: 75vh; /* Limits height to avoid overflowing */
+    overflow-y: auto; /* Enables vertical scrolling */
+}
+
+/* Custom Scrollbar for Desktop */
+.questions-count::-webkit-scrollbar {
+    width: 6px;
+}
+
+.questions-count::-webkit-scrollbar-thumb {
+    background-color: #004d40;
+    border-radius: 3px;
+}
+
+.questions-count::-webkit-scrollbar-track {
+    background: #e0f2f1;
+}
+  
+  /* Question Number Styling */
+  .que-count {
+    background-color: #b5d3d2;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #004d40;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .que-count:hover {
+    background-color: #004d40;
+    color: white;
+    transform: scale(1.1);
+  }
+  
+  /* Responsive Adjustments */
+@media (max-width: 768px) {
+    
+    .no-of-questions {
+      width: 100%;
+      height: auto;
+      border-right: none;
+      border-bottom: 2px solid #004d40;
+      justify-content: center;
+      overflow-x: auto;
+      padding: 0.5rem;
+    }
+  
+    .questions-count {
+       max-width: 90vw;
+        flex-direction: row;
+        max-height: none;
+        overflow-y: hidden;
+        overflow-x: auto; /* Enables horizontal scrolling on small screens */
+        white-space: nowrap; /* Prevents wrapping */
+    }
+
+    .questions-count::-webkit-scrollbar {
+        height: 5px; /* Custom scrollbar for horizontal scrolling */
+    }
+  
+    .que-heading {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .que-count {
+      width: 3rem;
+      height: 3rem;
+      font-size: 0.9rem;
+      padding: 0 1.2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .que-count {
+      width: 2rem;
+      height: 2rem;
+      font-size: 0.9rem;
+    }
+  
+    .que-heading {
+      font-size: 1rem;
+    }
+  }

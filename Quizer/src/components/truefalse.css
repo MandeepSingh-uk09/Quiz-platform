@@ -1,0 +1,209 @@
+.tf-quiz-page{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-height: min-content;
+    width: 100vw;
+    background-color: #dfe0dff8;
+  }
+  
+  .tf-quiz-create{
+      width: 100%;
+    display: flex;
+    box-sizing: border-box;
+  }
+  .tf-add-question {
+    width: 60%;
+    background-color: white;
+    min-height: 60vh;
+    margin: 2rem auto;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .tf-question-type {
+    margin: 1rem 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  .tf-question {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #006e61;
+    color: black;
+    font-size: 1rem;
+    outline: none;
+    padding: 0.5rem 0;
+  }
+  
+  .tf-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1rem 0;
+    width: 100%;
+  }
+  
+  .tf-label {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    width: 90%;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid #006e61;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .tf-label input {
+    display: none;
+  }
+  
+  .tf-label.selected {
+    background-color: #006e61;
+    color: white;
+  }
+  
+  /* Buttons */
+  .tf-save-next {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+  }
+  
+  .tf-save-next button {
+    flex: 1;
+    width: 100%;
+    max-width: 150px;
+    border: 1px solid #00a990;
+    padding: 0.75rem;
+    cursor: pointer;
+    border-radius: 1rem;
+    text-align: center;
+    color: #006e61;
+    font-weight: bold;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+  }
+  
+  .tf-save-next button:first-child:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .tf-save-next button:last-child {
+    background-color: #00a990;
+    color: white;
+  }
+  
+  .tf-save-next button:hover {
+    opacity: 0.85;
+  }
+  
+  /* Quiz description modal */
+  .tf-quiz-description {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 90%;  
+    max-width: 600px;
+    min-height: 300px;
+    text-align: center;
+    z-index: 1000;
+    border: 2px solid black;
+  }
+  
+  .tf-quiz-description h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: #333;
+    border-bottom: 1px solid black;
+    padding-bottom: 0.5rem;
+  }
+  
+  .tf-quiz-description input {
+    width: 100%;
+    height: 4rem;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border 0.3s ease;
+    background-color: #dfe0df;
+    color: black;
+    margin-top: 1rem;
+    text-align: center;
+  }
+  
+  .tf-quiz-description input:focus {
+    border-color: #007bff;
+  }
+  
+  .tf-quiz-description button {
+    margin-top: 3.5rem;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 200px;
+    transition: background 0.3s ease;
+  }
+  
+  .tf-quiz-description button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .tf-quiz-create {
+      flex-direction: column;
+      align-items: center;
+    } 
+
+    .tf-add-question {
+      width: 95%;
+      padding: 1rem;
+    }
+    .tf-save-next {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .tf-save-next button {
+      max-width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .tf-quiz-description {
+      width: 95%;
+      padding: 15px;
+    }
+    .tf-quiz-description h3 {
+      font-size: 16px;
+    }
+    .tf-quiz-description input {
+      font-size: 14px;
+    }
+    .tf-quiz-description button {
+      font-size: 14px;
+      width: 100%;
+    }
+  }

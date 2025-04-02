@@ -50,45 +50,70 @@ const Detailedquiz = ({visibility,setVisibility ,quiztype, email}) => {
 
   return (
     
-    <div className={`detailed-quiz ${visibility === "true" ? "visibility" : ""}`}>
-      <div className='view-quizs'>
-        <div className='close' onClick={() => setVisibility("false")}>&times;</div>
-        <div className='dq-comp'>
-          <h3>Your {quiztype} Quizzes </h3>
+    <div className={`quiz-modal ${visibility === "true" ? "visible" : ""}`}>
+            {close === "false" ? 
+            <div className="quiz-container">
+                <span className="quiz-detail-close-btn" onClick={() => setVisibility("false")}>&times;</span>
+                <h3 className="quiz-title">Your {quiztype} Quizzes</h3>
 
-          {quizzes.length > 0 ? (
-            quizzes.map((quiz , index) => (
-              <div className='dq-lists' key={quiz._id} onClick={()=>{handleSelect(index)}}>
-                <div className='list-desc' >{quiz.quizDescription || quiz._id}</div>
-                <div className="list-del">
-                  <IconButton aria-label="delete" onClick={() => handleDeleteQuiz(quiz._id)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p>No quizzes found.</p>
-          )}
+                {quizzes.length > 0 ? (
+                    <ul className="quiz-list">
+                        {quizzes.map((quiz, index) => (
+                            <li className="quiz-item" key={quiz._id} onClick={() => {handleSelect(index)}}>
+                                <span className="quiz-item-desc">{quiz.quizDescription || quiz._id}</span>
+                                <IconButton className="delete-icon" aria-label="delete" onClick={(e) => { e.stopPropagation(); handleDeleteQuiz(quiz._id); }}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>No quizzes found.</p>
+                )}
+            </div>
+            : 
+            <div className={`questions-container ${close === "false" ? "" : "visible"}`}>
+                <span className="quiz-detail-close-btn" onClick={() => { setClose("false"); setQuestions([]); }}>&times;</span>
+                <h3 className="quiz-title">Your Questions</h3>
+                {questions.length > 0 ? (
+                    <ul className="quiz-list">
+                        {questions.map((quiz, index) => (
+                            <li className="question-item" key={index}>
+                                {index + 1}. {quiz.question || index}
+                            </li>
+                        ))}  
+                        <li className="question-item" >
+                                hey
+                        </li>       
+                        <li className="question-item" >
+                                hey
+                        </li>  
+                        <li className="question-item" >
+                                hey
+                        </li>  
+                        <li className="question-item" >
+                                hey
+                        </li>                 
+                        <li className="question-item" >
+                                hey
+                        </li>  
+                        <li className="question-item" >
+                                hey
+                        </li>  
+                        <li className="question-item" >
+                                hey
+                        </li>  
+                        <li className="question-item" >
+                                hey
+                        </li>  
+                    </ul>
+                ) : (
+                    <p>No questions found.</p>
+                )}
+            </div>
+            }
         </div>
-      </div>
-      <div className={`de-qusetions ${close === "false" ? "close" : ""}`}>
-        <div className='close' onClick={() => {setClose("false");setQuestions([])}}>&times;</div>
-        <div className='dq-comp'>
-          <h3>Your Questions </h3>
-          {questions.length > 0 ? (
-            questions.map((quiz , index) => (
-              <div className='dq-list' key={index}>
-                <div className='list-desc'>{index+1}. {`${quiz.question || index}`}</div>
-              </div>              
-            ))
-            
-          ) : (
-            <p>No quizzes found.</p>
-          )}
-        </div>
-      </div>
-    </div>
+      
   )
 }
 

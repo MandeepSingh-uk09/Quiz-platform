@@ -9,7 +9,7 @@
 body {
   overflow-x: hidden;
   font-family: Arial, sans-serif;
-  background-color: #fcfcfc;
+  /* background-color: #fcfcfc; */
 }
 
 .leaderboard-container {

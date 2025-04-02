@@ -1,0 +1,197 @@
+.poll-quiz-page{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-height: min-content;
+    width: 100vw;
+    background-color: #dfe0dff8;
+  }
+  
+  .poll-quiz-create{
+      width: 100%;
+    display: flex;
+    box-sizing: border-box;
+  }
+/* Question Form */
+.poll-add-question {
+width: 60%;
+  background-color: white;
+  min-height: 60vh;
+  margin: 2rem auto;
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.poll-question-type {
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.poll-question {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #006e61;
+    color: black;
+    font-size: 1rem;
+    outline: none;
+    padding: 0.5rem;
+}
+
+.poll-options {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 1rem 0;
+    width: 100%;
+}
+
+.poll-option {
+    border: 1px solid #006e61;
+    margin: 0.5rem 0;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    background-color: #dfe0df9d;
+    color: black;
+}
+
+/* Buttons */
+.poll-save-next {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+}
+
+.poll-save-next button {
+    flex: 1;
+    width: 100%;
+    max-width: 150px;
+    border: 1px solid #00a990;
+    padding: 0.75rem;
+    cursor: pointer;
+    border-radius: 1rem;
+    text-align: center;
+    color: #006e61;
+    font-weight: bold;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+    .poll-save-next button:first-child:hover {
+        background-color: #007bff;
+        color: white;
+    }
+  
+  .poll-save-next button:last-child {
+    background-color: #00a990;
+    color: white;
+  }
+
+    .poll-save-next button:hover {
+        opacity: 0.85;
+    }
+
+
+/* Quiz Description */
+.poll-quiz-description {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.961);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 600px;
+    min-height: 300px;
+    text-align: center;
+    z-index: 1000;
+    border: 2px solid black;
+}
+
+.poll-quiz-description h3 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    color: #333;
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+}
+
+.poll-quiz-description input {
+    width: 100%;
+    height: 4rem;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.3s ease;
+    background-color: #dfe0df;
+    color: black;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.poll-quiz-description button {
+    margin-top: 3.5rem;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 40%;
+    transition: background 0.3s ease;
+}
+
+.poll-quiz-description button:hover {
+    background-color: #0056b3;
+}
+
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .poll-quiz-create {
+        flex-direction: column;
+        align-items: center;
+      } 
+
+    .poll-add-question {
+        width: 95%;
+        padding: 1rem;
+    }
+
+    .poll-save-next {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .poll-save-next button {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .poll-quiz-description {
+        width: 95%;
+        height: auto;
+        padding: 15px;
+    }
+    .poll-quiz-description input {
+        width: 90%;
+        height: 35px;
+    }
+    .poll-quiz-description button {
+        width: 50%;
+    }
+}

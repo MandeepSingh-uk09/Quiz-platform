@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './quiz.css';
+import "./poll.css"
 import Questions from './Questions';
 import Submitnav from './Submitnav';
 
@@ -87,52 +87,52 @@ const Poll = () => {
     return (
         <>
             {!popUp ? (
-                <div className='quiz-description'>
-                    <h3>Enter your Quiz Description here</h3>
+    <div className='poll-quiz-description'>
+        <h3>Enter your Quiz Description here</h3>
+        <input
+            type="text"
+            placeholder='Write here...'
+            value={quizDescription}
+            onChange={(e) => setQuizDescription(e.target.value)}
+        />
+        <button onClick={() => setPopup(true)}>Next</button>
+    </div>
+) : (
+    <div className='poll-quiz-page'>
+        <Submitnav handleFinish={handleFinish} />
+        <div className='poll-quiz-create'>
+            <Questions questions={questions} />
+            <form className='poll-add-question' onSubmit={handleSubmit}>
+                <div>
+                    <div className='poll-question-type'>{questions.length + 1} Poll</div>
                     <input
-                        type="text"
-                        placeholder='Write here...'
-                        value={quizDescription}
-                        onChange={(e) => setQuizDescription(e.target.value)}
+                        type='text'
+                        className='poll-question'
+                        placeholder='Enter your question'
+                        value={question}
+                        onChange={(e) => setQuestion(e.target.value)}
                     />
-                    <button onClick={() => setPopup(true)}>Next</button>
-                </div>
-            ) : (
-                <div className='quiz-page'>
-                    <Submitnav handleFinish={handleFinish} />
-                    <div className='quiz-create'>
-                        <Questions questions={questions} />
-                        <form className='add-question' onSubmit={handleSubmit}>
-                            <div>
-                                <div className='question-type'>{questions.length + 1} Poll</div>
-                                <input
-                                    type='text'
-                                    className='question'
-                                    placeholder='Enter your question'
-                                    value={question}
-                                    onChange={(e) => setQuestion(e.target.value)}
-                                />
-                                <div className='options'>
-                                    {options.map((option, index) => (
-                                        <input
-                                            key={index}
-                                            type='text'
-                                            className='poll-option'
-                                            placeholder={`Option ${index + 1}`}
-                                            value={option}
-                                            onChange={(e) => handleOptionChange(index, e.target.value)}
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                            <div className='save-next'>
-                                <button type='button' onClick={handleClear}>Clear</button>
-                                <button type='submit'>Add</button>
-                            </div>
-                        </form>
+                    <div className='poll-options'>
+                        {options.map((option, index) => (
+                            <input
+                                key={index}
+                                type='text'
+                                className='poll-option'
+                                placeholder={`Option ${index + 1}`}
+                                value={option}
+                                onChange={(e) => handleOptionChange(index, e.target.value)}
+                            />
+                        ))}
                     </div>
                 </div>
-            )}
+                <div className='poll-save-next'>
+                    <button type='button' onClick={handleClear}>Clear</button>
+                    <button type='submit'>Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+)}
         </>
     );
 };
