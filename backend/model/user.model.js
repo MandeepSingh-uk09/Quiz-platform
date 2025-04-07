@@ -39,6 +39,11 @@ const QuizSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    assigned:{
+        type: Boolean,
+        default: false,
+        required: false
+    },
     quizDescription: {
         type: String,
         required: true
@@ -86,6 +91,17 @@ const QuizResultSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
+const AssignQuizSchema = new mongoose.Schema({
+    userId:{
+        type: String,
+        required: true
+    },
+    assignedQuiz:{
+        type: Array,
+        required: false
+    }
+})
+
 /* const User = mongoose.model('User', UserSchema);
 const Quiz = mongoose.model('Quizes', QuizSchema);
 module.exports = User;
@@ -94,4 +110,5 @@ module.exports = Quiz; */
 const User = mongoose.model('User', UserSchema , "users");
 const Quiz = mongoose.model('Quiz', QuizSchema ,"quizes");
 const QuizResult = mongoose.model('QuizResult', QuizResultSchema, "scores");
-module.exports = { User, Quiz ,QuizResult};
+const AssignedQuiz = mongoose.model('AssignedQuiz', AssignQuizSchema ,"assignedQuizes");
+module.exports = { User, Quiz ,QuizResult , AssignedQuiz};

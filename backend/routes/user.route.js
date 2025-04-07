@@ -1,8 +1,14 @@
 const express = require('express');
-const { signupUserDao, loginUserDao, quizDao , quizScoreDao} = require('../dao/user.dao');
+const { signupUserDao, 
+  loginUserDao, 
+  quizDao , 
+  quizScoreDao , 
+  assignQuizDao, 
+  assignQuizToUserDao, 
+} = require('../dao/user.dao');
 const authMiddleware  = require('../middleware/user.auth');
 const router = express.Router();
-const { Quiz , QuizResult} = require('../model/user.model');
+const { Quiz , QuizResult , User , AssignedQuiz } = require('../model/user.model');
 
 router.post('/signup', async (req, res) => {
     try {
@@ -24,23 +30,26 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/quiz/mcq', authMiddleware ,async (req, res) => {
-    try {
-        const MCQ = req.body;
-        console.log("req",MCQ);
-        const savedQuiz = await quizDao(MCQ);
-        res.status(200).json("Quiz Created");
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
+router.post('/quiz/mcq', authMiddleware, async (req, res) => {
+  try {
+      const MCQ = req.body;
+      console.log("req", MCQ);
+      
+      const savedQuiz = await quizDao(MCQ);
+      
+      res.status(200).json({ message: "Quiz Created", id: savedQuiz._id });
+  } catch (error) {
+      res.status(400).json({ message: error.message });
+  }
 });
+
 
 router.post('/quiz/truefalse', authMiddleware ,async (req, res)=>{
     try {
         const trueFalseQuiz = req.body;
         console.log("req", trueFalseQuiz);
         const savedQuiz = await quizDao(trueFalseQuiz);
-        res.status(200).json("True/False Quiz Created");
+        res.status(200).json({ message: "Quiz Created", id: savedQuiz._id });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -51,7 +60,7 @@ router.post('/quiz/poll', authMiddleware ,async (req, res)=>{
         const pollQuiz = req.body;
         console.log("req", pollQuiz);
         const savedQuiz = await quizDao(pollQuiz);
-        res.status(200).json("Poll Quiz Created");
+        res.status(200).json({ message: "Quiz Created", id: savedQuiz._id });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -62,7 +71,7 @@ router.post('/quiz/openended', authMiddleware ,async (req, res)=>{
         const openEndQuiz = req.body;
         console.log("req", openEndQuiz);
         const savedQuiz = await quizDao(openEndQuiz);
-        res.status(200).json("Open-ended Quiz Created");
+        res.status(200).json({ message: "Quiz Created", id: savedQuiz._id });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -197,7 +206,7 @@ router.get("/quiz/:id", async (req, res) => {
 });
 
 
-router.get('/takequiz', async (req, res) => {
+router.get('/open-quizzes', async (req, res) => {
     try {
         const { email } = req.query;
 
@@ -206,13 +215,31 @@ router.get('/takequiz', async (req, res) => {
         }
 
         // Fetch quizzes where the email does NOT match the provided one
-        const quizzes = await Quiz.find({ email: { $ne: email } });
+        const quizzes = await Quiz.find({ email: { $ne: email },assigned: { $ne: true } });
 
         res.json(quizzes);
     } catch (error) {
         console.error('Error fetching quizzes:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
+});
+
+router.get('/assigned-quizzes', async (req, res) => {
+  try {
+      const { email } = req.query;
+
+      if (!email) {
+          return res.status(400).json({ message: 'Email is required' });
+      }
+
+      // Fetch quizzes where the email does NOT match the provided one
+      const quizzes = await Quiz.find({ email: { $ne: email },assigned: true });
+
+      res.json(quizzes);
+  } catch (error) {
+      console.error('Error fetching quizzes:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 router.get("/user-quizzes/:email", async (req, res) => {
@@ -396,5 +423,87 @@ router.get("/poll-leaderboard/:quizId", async (req, res) => {
       res.status(500).json({ message: "Internal Server Error" });
     }
   });
+
+  router.get("/get-users/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log(id);
+
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        
+        const users = await User.find({ _id: { $ne: id } }).select("_id username email");
+
+        res.status(200).json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error" });
+    }
+  });
+
+  router.post("/set-assign-quiz/:id", async (req, res)=>{
+    try{
+       const {id} =req.params;
+       const savedata = assignQuizDao(id);
+       res.status(200).json("Quiz assigned successfully");
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server error" });
+  }
+  }) 
+
+  
+  router.post("/set-assign-quiz-to-user", async (req, res)=>{
+    try{
+       const data = req.body;
+       const saveData = await assignQuizToUserDao(data);
+       res.status(200).json("Quiz assigned successfully");
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server error" });
+  }
+  }) 
+
+
+  router.get('/get-assigned-quizzes/:userID', async (req, res) => {
+    try {
+        const userID = req.params.userID;
+        const assigned = await AssignedQuiz.findOne({ userId: userID });
+
+        if (!assigned) {
+            return res.status(404).json({ message: "No quizzes assigned to this user." });
+        }
+
+        res.status(200).json({ assignedQuiz: assigned.assignedQuiz });
+    } catch (err) {
+        res.status(500).json({ message: "Server error", error: err.message });
+    }
+});
+
+// PUT route to update quiz as assigned
+router.put("/update-quiz-to-assigned/:quizID", async (req, res) => {
+  const { quizID } = req.params;
+ 
+  console.log(" quiz to update", quizID);
+  try {
+    const updatedQuiz = await Quiz.findByIdAndUpdate(
+      quizID,
+      { assigned: true },
+      { new: true } // returns updated doc
+    );
+
+    if (!updatedQuiz) {
+      return res.status(404).json({ message: "Quiz not found" });
+    }
+
+    res.status(200).json({ message: "Quiz marked as assigned", quiz: updatedQuiz });
+  } catch (error) {
+    console.error("Error updating quiz:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
 module.exports = router;

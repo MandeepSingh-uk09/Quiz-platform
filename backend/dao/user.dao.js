@@ -1,4 +1,4 @@
-const { signupUserService,loginUserService,quizService,quizScoreService} = require("../services/user.services");
+const { signupUserService,loginUserService,quizService,quizScoreService ,assignQuizService, assignQuizToUserService} = require("../services/user.services");
 
 exports.signupUserDao = async (userData) => {
     try {
@@ -32,6 +32,26 @@ exports.quizScoreDao = async (userData) => {
   try {
     console.log("dao",userData);
     return await quizScoreService(userData);
+  } catch (error) {
+    console.error("Quiz DAO Error:", error.message);
+    throw new Error(error.message);
+  }
+}
+
+exports.assignQuizDao = async (id) =>{
+  try{
+    console.log(" assign quiz dao",id);
+    return await assignQuizService(id);
+  } catch (error) {
+    console.error("Quiz DAO Error:", error.message);
+    throw new Error(error.message);
+  }
+}
+
+exports.assignQuizToUserDao = async (data) =>{
+  try{
+    console.log(" assign quiz to user dao",data);
+    return await assignQuizToUserService(data);
   } catch (error) {
     console.error("Quiz DAO Error:", error.message);
     throw new Error(error.message);

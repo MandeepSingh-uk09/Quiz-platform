@@ -6,6 +6,7 @@ import Quiz from './pages/Quiz'
 import Landing from './pages/Landing'
 import Playquiz from './pages/Playquiz'
 import Leaderboard from './pages/Leaderboard'
+import Assignquiz from './pages/Assignquiz'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/landing" element={<Landing />} />
         <Route path="/playquiz" element={<Playquiz />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/assign-quiz" element={<Assignquiz />} />
       </Routes>
     </BrowserRouter>
     {/* <Home /> */}

@@ -35,12 +35,30 @@ const Register = ({ toggleAuth }) => {
         });
 
         if(response.ok){
-          toggleAuth();
+            const data = await response.json();
+            const getID = data._id;
+            assignUserQuiz(getID);    
+            toggleAuth();      
         }
 
-        const result = await response.json();
-        console.log(result);
     };
+
+    const assignUserQuiz = async(id)=>{
+        try{
+            const response = await fetch(`http://localhost:8080/api/auth/set-assign-quiz/${id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }            
+            });
+    
+            if(response.ok){
+                return
+            }
+        }catch(err){
+            console.log("error in assigning quiz",err)
+        }
+    }
 
     return (
         <div className="auth-form-container">

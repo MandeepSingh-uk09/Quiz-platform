@@ -8,6 +8,7 @@ const Home = () => {
 
     const toggleAuth = () => {
         setIsRegister(!isRegister);
+        console.log("isRegister", !isRegister);
     };
 
     return (   
@@ -15,7 +16,7 @@ const Home = () => {
             {isRegister ? 
                 <>
                     <div className='auth-image'></div>
-                    <Login toggleAuth={toggleAuth} />
+                    <Login toggleAuth={toggleAuth} setIsRegister={setIsRegister}/>
                 </>
             : 
                 <>

@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { User , Quiz ,QuizResult} = require('../model/user.model');
+const { User , Quiz ,QuizResult , AssignedQuiz} = require('../model/user.model');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -51,4 +51,49 @@ exports.quizScoreService=async (result)=>{
   const savedScore = await score.save();
     
   return savedScore;
+}
+
+exports.assignQuizService=async (id)=>{
+
+  console.log("here in asign quiz");
+  const score = new AssignedQuiz({userId:id, assignedQuiz:[]});
+  const savedScore = await score.save();
+    
+  return savedScore;
+}
+
+exports.assignQuizToUserService=async (data)=>{
+  try {
+    console.log("In assign quiz service");
+  
+    const entries = Object.entries(data); // [ [userId, quizId], ... ]
+
+    console.log("Enteries", entries);
+  
+    for (const [userId, quizId] of entries) {
+      console.log("userid",userId);
+      console.log("quizid",quizId);
+      let userQuiz = await AssignedQuiz.findOne({ userId });
+  
+      if (!userQuiz) {
+        userQuiz = new AssignedQuiz({
+          userId,
+          assignedQuiz: [quizId],
+        });
+      } else {
+        if (!userQuiz.assignedQuiz.includes(quizId)) {
+          userQuiz.assignedQuiz.push(quizId);
+        }
+      }
+  
+      await userQuiz.save();
+    }
+  
+    return { message: "Quiz assigned successfully" };
+  
+  } catch (err) {
+    console.error("Error in assignQuizToUserService:", err);
+    throw err;
+  }
+  
 }

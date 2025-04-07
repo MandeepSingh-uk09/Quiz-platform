@@ -110,8 +110,8 @@
     padding-bottom: 20px;
     font-size: 1rem;
     max-height: 70vh;
-    overflow-y: auto;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: scroll;    
     scrollbar-width: thin;
     scrollbar-color: rgb(9, 133, 118) #f1f1f1;
 }
@@ -135,16 +135,50 @@
 }
 
 .aq-heading {
-    padding: 10px;
+    padding-top: 10px;
     box-sizing: border-box;
     position: sticky;
     top: 0;
     width: 100%;
     font-weight: bold;
-    border-bottom: 1px solid rgb(192, 192, 192);
+    border-bottom: 1px solid black;
     background-color: white;
     text-align: center;
 }
+
+.aq-type{    
+    margin-top: 5px;
+    display: flex;
+    border-top: 2px solid rgb(0, 0, 0);
+}
+
+.aq-type div {
+    padding: 10px 0px;
+    width: 50%;
+    text-align: center;
+    color: gray;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.aq-all{
+    border-right: 1px solid black;
+}
+
+.aq-all.selected,
+.aq-assigned.selected{
+    background-color: rgb(9, 133, 118);
+    color: white;
+    border-color: white;
+}
+
+.aq-all:hover,
+.aq-assigned:hover{
+    background-color: rgb(9, 133, 118);
+    color: white;
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
