@@ -41,6 +41,7 @@
 /* Logout button outside menu (Visible on large screens) */
 .logout-desktop {
     display: block;
+    font-size: 20px;
 }
 
 /* Logout inside menu (Hidden on large screens) */
@@ -72,6 +73,7 @@
         top: 100%;
         left: 0;
         width: 100%;
+        z-index: 1000;
         background-color: #004d45; /* Darker Shade for Contrast */
         flex-direction: column;
         align-items: center;
@@ -95,8 +97,7 @@
     /* Show logout inside the menu on small screens */
     .logout-mobile {
         display: block;
-        font-weight: bold;        
-        padding: 0.8rem;
+        font-weight: bold;    
     }
 
 

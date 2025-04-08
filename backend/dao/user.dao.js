@@ -1,8 +1,8 @@
 const { signupUserService,loginUserService,quizService,quizScoreService ,assignQuizService, assignQuizToUserService} = require("../services/user.services");
 
-exports.signupUserDao = async (userData) => {
+exports.signupUserDao = async (userData , photo) => {
     try {
-      return await signupUserService(userData);
+      return await signupUserService(userData, photo);
     } catch (error) {
       console.error("Signup DAO Error:", error.message);
       throw new Error(error.message);

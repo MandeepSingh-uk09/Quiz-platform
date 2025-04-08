@@ -200,8 +200,10 @@ body {
 }
 
 .leaderboard-poll-option {
-  height: 20px;
+  padding: 5px 0;
   transition: width 0.6s ease-in-out;
+  color: white;
+  font-size: small;
 }
 
 .leaderboard-poll-yes {

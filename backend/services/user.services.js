@@ -3,7 +3,7 @@ const { User , Quiz ,QuizResult , AssignedQuiz} = require('../model/user.model')
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-exports.signupUserService = async ({username, email, password}) => {
+exports.signupUserService = async ({username, email, password} , photo) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       throw new Error('Email already in use');
@@ -12,7 +12,12 @@ exports.signupUserService = async ({username, email, password}) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     const userData = { username, email, password: hashedPassword};
+
+    if(photo){
+      userData.photo=photo;
+    }
     
+    console.log("user data",userData);
     
   
     const newUser = new User(userData);
@@ -23,6 +28,7 @@ exports.signupUserService = async ({username, email, password}) => {
 
 exports.loginUserService = async ({ email, password }) => {
     const existingUser = await User.findOne({ email });
+    console.log("user .. ",existingUser);
     
     if (!existingUser) {
       throw new Error('Email Does Not Exist');
@@ -33,12 +39,17 @@ exports.loginUserService = async ({ email, password }) => {
       throw new Error('Invalid Credentials');
     }
 
-    const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, process.env.JWT_SECRET , { expiresIn: '1h' });
-    return { result: existingUser, token };
+    
+    const newExistingUser = existingUser.toObject();
+    delete newExistingUser.password;
+    
+    console.log(" user 2",newExistingUser);
+
+    const token = jwt.sign({ email: newExistingUser.email, id: newExistingUser._id }, process.env.JWT_SECRET , { expiresIn: '1h' });
+    return { result: newExistingUser, token };
 }
 
-exports.quizService = async (MCQ) => {
-    
+exports.quizService = async (MCQ) => {    
     const newQuiz = new Quiz(MCQ);
     const savedQuiz = await newQuiz.save();    
     return savedQuiz;

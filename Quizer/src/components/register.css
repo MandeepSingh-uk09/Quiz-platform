@@ -18,11 +18,45 @@
     align-items: center;
 }
 
+/* Existing styles... */
+
+.photo-preview {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 5px auto;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* File input style */
+.auth-form-container input[type="file"].photo-upload {
+    width: 80%;
+    padding: 2px;
+    border-radius: 8px;
+    border: 1px dashed #ccc;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+
 .auth-form-container input {
     width: 80%;
-    height: 2rem;
-    margin: 0.5rem 0;
-    padding: 0.5rem;
+    height: 1.8rem;
+    margin: 0.4rem 0;
+    padding: 0.4rem;
     border-radius: 8px;
     border: none;
     background-color: white;
@@ -30,9 +64,11 @@
     font-size: 1rem;
 }
 
+
+
 .auth-form-container button {
     width: 50%;
-    height: 2.5rem;
+    height: 2rem;
     margin: 0.5rem 0;
     border-radius: 8px;
     border: none;
@@ -53,4 +89,24 @@
     font-weight: bold;
     cursor: pointer;
     margin-top: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .auth-form-container {
+        width: 100%;
+        padding: 1.5rem 1rem;
+        border-radius: 16px;
+    }
+
+    .auth-form-container input,
+    .auth-form-container input[type="file"].photo-upload,
+    .auth-form-container button {
+        max-width: 100%;
+        font-size: 0.95rem;
+    }
+
+    .photo-preview {
+        width: 60px;
+        height: 60px;
+    }
 }

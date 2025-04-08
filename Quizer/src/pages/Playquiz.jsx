@@ -148,6 +148,7 @@ const Playquiz = () => {
     {(quizType !== "Open-Ended")?
     <div className="play-quiz">
       <div className="bg">
+        {!displayResult ? (
         <div className="player">
           {questions.length > 0 ? (
             <>
@@ -176,16 +177,18 @@ const Playquiz = () => {
           ) : (
             <p>Loading quiz...</p>
           )}
-        </div>
-        {displayResult && (
+        </div>)
+        : 
+        (displayResult && quizType !== "Poll Quiz" && (
           <div className="result">
             <div className="re-score">
               <h3>Score</h3>
               <div>{score}</div>
             </div>
-            <div className="close-btn" onClick={() => navigate('/dashboard')}>Done</div>
+            <div className="close-btn" onClick={() => navigate('/landing')}>Done</div>
           </div>
-        )}
+        ))
+        }
       </div>
     </div>
     : 

@@ -11,6 +11,7 @@ const Leaderboard = () => {
   const [leaderboardQuizType, setLeaderboardQuizType] = useState("");
   const [pollData, setPollData] = useState(null);
   const [openEndedResponses, setOpenEndedResponses] = useState([]);
+  const [assignedStatus ,setAssignedStatus] = useState(false);
 
   const user = JSON.parse(localStorage.getItem("user"));
   const email = user?.email;
@@ -32,9 +33,11 @@ const Leaderboard = () => {
       setQuizData(data);
 
       const quizTypes = Object.keys(data);
+      console.log(quizTypes);
       if (quizTypes.length > 0) {
         const firstQuizType = quizTypes[0];
         const firstQuiz = data[firstQuizType][0];
+        console.log(firstQuiz);
 
         if (firstQuiz) {
           handleSelect(firstQuiz.totalQuestions, firstQuiz.quizId, firstQuiz.description, firstQuizType);
@@ -45,11 +48,12 @@ const Leaderboard = () => {
     }
   };
 
-  const handleSelect = async (total, id, description, quizType) => {
+  const handleSelect = async (total, id, description, quizType , assigned=false) => {
     setTotalQuestion(total);
     setQuizDescription(description);
     setSelectedQuizId(id);
     setLeaderboardQuizType(quizType);
+    setAssignedStatus(assigned);
 
     if (quizType === "Poll Quiz") {
       fetchPollData(id);
@@ -120,9 +124,9 @@ const Leaderboard = () => {
                       <li
                         key={idx}
                         className={`leaderboard-item ${selectedQuizId === quiz.quizId ? "selected" : ""}`}
-                        onClick={() => handleSelect(quiz.totalQuestions, quiz.quizId, quiz.description, quizType)}
+                        onClick={() => handleSelect(quiz.totalQuestions, quiz.quizId, quiz.description, quizType, quiz.assigned)}
                       >
-                        {quiz.description || quiz.quizId}
+                       {quiz.assigned? "(A)":""} {quiz.description || quiz.quizId}
                       </li>
                     ))}
                   </ul>
@@ -184,7 +188,7 @@ const Leaderboard = () => {
                             key={oIndex}
                             className={`leaderboard-poll-option ${oIndex === 0 ? "leaderboard-poll-yes" : "leaderboard-poll-no"}`}
                             style={{ width: `${votePercentage}%`, minWidth: "0px" }}
-                          />
+                          >{votePercentage !== 0.00 ? `${Math.floor(votePercentage)}%`:""}</div>
                         );
                       })}
                     </div>
@@ -201,7 +205,7 @@ const Leaderboard = () => {
         ) : (
           <div className="leaderboard-results">
             <h2 className="leaderboard-results-title">Leaderboard</h2>
-            <h4 className="leaderboard-quiz-description">{quizDescription}</h4>
+            <h4 className="leaderboard-quiz-description">{quizDescription} {assignedStatus? "( Assigned )":""}</h4>
             <div className="leaderboard-scores">
               {leaderboard.length > 0 ? (
                 leaderboard.map((entry, index) => (

@@ -10,10 +10,35 @@ const authMiddleware  = require('../middleware/user.auth');
 const router = express.Router();
 const { Quiz , QuizResult , User , AssignedQuiz } = require('../model/user.model');
 
-router.post('/signup', async (req, res) => {
+
+// FILE UPLOAD DEPENDENCIES
+const fs =require('fs');
+const path = require('path');
+const multer = require('multer');
+
+const uploadDir = path.join(__dirname, '../uploads');
+if(!fs.existsSync(uploadDir)){
+  fs.mkdirSync(uploadDir);
+}
+
+const storage = multer.diskStorage({
+  destination: (req,file,cb)=>{
+    const upladPath =path.join(__dirname, '../uploads');
+    cb(null, upladPath);
+  },
+  filename: (req,file,cb)=>{
+    const filename = `${Date.now()}-${file.originalname}`;
+    cb(null, filename);
+  }
+})
+
+const upload = multer({storage:storage});
+
+router.post('/signup', upload.single('photo') ,async (req, res) => {
     try {
         const userData = req.body;
-        const savedUser = await signupUserDao(userData);
+        const fileName = req.file ? req.file.filename : null;
+        const savedUser = await signupUserDao(userData , fileName);
         res.status(200).json(savedUser);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -260,7 +285,8 @@ router.get("/user-quizzes/:email", async (req, res) => {
           quizData[quiz.quizType].push({
             quizId: quiz._id,
             description: quiz.quizDescription,
-            totalQuestions: quiz.questions.length
+            totalQuestions: quiz.questions.length,
+            assigned: quiz.assigned || false
           });
         }
       });
