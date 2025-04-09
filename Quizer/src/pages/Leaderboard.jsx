@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./leaderboard.css";
 import Navbar from "../components/Navbar";
+import { FaAngleUp , FaAngleDown} from "react-icons/fa";
 
 const Leaderboard = () => {
   const [quizData, setQuizData] = useState(null);
   const [leaderboard, setLeaderboard] = useState([]);
   const [totalQuestion, setTotalQuestion] = useState();
-  const [quizDescription, setQuizDescription] = useState();
+  const [quizDescription, setQuizDescription] = useState(null);
   const [selectedQuizId, setSelectedQuizId] = useState(null);
   const [leaderboardQuizType, setLeaderboardQuizType] = useState("");
   const [pollData, setPollData] = useState(null);
@@ -72,7 +73,6 @@ const Leaderboard = () => {
         return;
       }
       const data = await response.json();
-      console.log("Leaderboard Data:", data);
       setLeaderboard(data);
     } catch (error) {
       console.error("Error fetching leaderboard:", error);
@@ -102,10 +102,20 @@ const Leaderboard = () => {
         return;
       }
       const data = await response.json();
+      console.log("open",data);
       setOpenEndedResponses(data);
     } catch (error) {
       console.error("Error fetching Open-Ended responses:", error);
     }
+  };
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedQuizLabel, setSelectedQuizLabel] = useState("");
+
+  const handleQuizClick = (totalQuestions, quizId, description, quizType, assigned) => {
+    handleSelect(totalQuestions, quizId, description, quizType, assigned);
+    setSelectedQuizLabel((assigned ? "(A) " : "") + (description || quizId));
+    setIsDropdownOpen(false); // Close dropdown on selection (for mobile)
   };
 
   return (
@@ -113,35 +123,56 @@ const Leaderboard = () => {
       <Navbar />
       <div className="leaderboard-content">
         <aside className="leaderboard-sidebar">
-          <h2 className="leaderboard-title">Quiz Types</h2>
-          {quizData ? (
-            <ul className="leaderboard-list">
-              {Object.keys(quizData).map((quizType, index) => (
-                <li key={index} className="leaderboard-category">
-                  <h3 className="leaderboard-type">{quizType}</h3>
-                  <ul className="leaderboard-items">
-                    {quizData[quizType].map((quiz, idx) => (
-                      <li
-                        key={idx}
-                        className={`leaderboard-item ${selectedQuizId === quiz.quizId ? "selected" : ""}`}
-                        onClick={() => handleSelect(quiz.totalQuestions, quiz.quizId, quiz.description, quizType, quiz.assigned)}
-                      >
-                       {quiz.assigned? "(A)":""} {quiz.description || quiz.quizId}
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>Loading quizzes...</p>
-          )}
-        </aside>
+      <h2 className="leaderboard-title">Quiz Types</h2>
+
+      {/* Mobile Toggle */}
+      <div className="dropdown-toggle" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+        {quizDescription || selectedQuizId}
+        <span className="arrow">{isDropdownOpen ? <FaAngleUp /> : <FaAngleDown />}</span>
+      </div>
+
+      {/* Sidebar Content */}
+      <div className={`quiz-dropdown-menu ${isDropdownOpen ? "open" : ""}`}>
+        {quizData ? (
+          <ul className="leaderboard-list">
+            {Object.keys(quizData).map((quizType, index) => (
+              <li key={index} className="leaderboard-category">
+                <h3 className="leaderboard-type">{quizType}</h3>
+                <ul className="leaderboard-items">
+                  {quizData[quizType].map((quiz, idx) => (
+                    <li
+                      key={idx}
+                      className={`leaderboard-item ${
+                        selectedQuizId === quiz.quizId ? "selected" : ""
+                      }`}
+                      onClick={() =>
+                        handleQuizClick(
+                          quiz.totalQuestions,
+                          quiz.quizId,
+                          quiz.description,
+                          quizType,
+                          quiz.assigned
+                        )
+                      }
+                    >
+                      {quiz.assigned ? "(A) " : ""}
+                      {quiz.description || quiz.quizId}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>Loading quizzes...</p>
+        )}
+      </div>
+    </aside>
 
         {leaderboardQuizType === "Open-Ended" ? (
           <div className="leaderboard-results">
             <h2 className="leaderboard-results-title">Open-Ended Responses</h2>
-            <h4 className="leaderboard-quiz-description">{quizDescription}</h4>
+            <h4 className="leaderboard-quiz-description">{quizDescription} {assignedStatus? "( Assigned )":""}</h4>
             <div className="open-ended-container">
               {openEndedResponses.length > 0 ? (
                 openEndedResponses.map((entry, index) => (
@@ -163,10 +194,10 @@ const Leaderboard = () => {
         ) : leaderboardQuizType === "Poll Quiz" ? (
           <div className="leaderboard-results">
             <h2 className="leaderboard-results-title">Poll Quiz Results</h2>
-            <h4 className="leaderboard-quiz-description">{quizDescription}</h4>
+            <h4 className="leaderboard-quiz-description">{quizDescription} {assignedStatus? "( Assigned )":""}</h4>            
+            <p className="poll-access-count">Total Access Count: {pollData.accessCount}</p>
             {pollData ? (
               <div className="poll-container">
-                <p className="poll-access-count">Total Access Count: {pollData.accessCount}</p>
                 {pollData.questions.map((question, qIndex) => (
                   <div key={qIndex} className="leaderboard-poll-container">
                     <div className="leaderboard-poll-question">

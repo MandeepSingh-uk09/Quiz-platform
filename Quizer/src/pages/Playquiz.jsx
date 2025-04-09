@@ -21,7 +21,7 @@ const Playquiz = () => {
   const { username, email } = user;
 
   useEffect(() => {
-    if (displayResult) {
+    if (displayResult && quizType !== "Open-Ended" && quizType !== "Open-Ended" ) {
       console.log(`Final Score: ${score}`);
       sendScore(score); 
   }

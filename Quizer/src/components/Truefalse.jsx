@@ -13,6 +13,7 @@ const Truefalse = () => {
     console.log(quizType);
 
     const navigate=useNavigate();
+    
     const [selectedOption, setSelectedOption] = useState("True");
     const [correctAnswer, setCorrectanswer] = useState("True");
     const [question,setQuestion]=useState('');
@@ -51,8 +52,11 @@ const Truefalse = () => {
                 })
             });
             const result = await response.json();
-            console.log(result);
-            navigate('/dashboard');
+            if (!result.id) {
+                throw new Error("Quiz ID not found in response.");
+            }
+            console.log(result.id);
+            navigate('/assign-quiz', {state:{quizID :result.id }});
         } catch (error) {
             console.log(error);
         }

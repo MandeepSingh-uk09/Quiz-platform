@@ -328,6 +328,7 @@ router.get("/user-quizzes/:email", async (req, res) => {
       if (!responses.length) {
         return res.status(404).json({ message: "No responses found for this quiz." });
       }
+      console.log(responses);
   
       res.status(200).json(responses);
     } catch (error) {

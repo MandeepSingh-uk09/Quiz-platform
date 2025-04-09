@@ -51,6 +51,7 @@ const Landing = () => {
 
             if(response.ok){
                 const data = await response.json();
+                console.log(data);
                 setAssignedQuizzes(data.assignedQuiz);
             }
         }catch(error){

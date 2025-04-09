@@ -81,31 +81,7 @@ const Detailedquiz = ({visibility,setVisibility ,quiztype, email}) => {
                             <li className="question-item" key={index}>
                                 {index + 1}. {quiz.question || index}
                             </li>
-                        ))}  
-                        <li className="question-item" >
-                                hey
-                        </li>       
-                        <li className="question-item" >
-                                hey
-                        </li>  
-                        <li className="question-item" >
-                                hey
-                        </li>  
-                        <li className="question-item" >
-                                hey
-                        </li>                 
-                        <li className="question-item" >
-                                hey
-                        </li>  
-                        <li className="question-item" >
-                                hey
-                        </li>  
-                        <li className="question-item" >
-                                hey
-                        </li>  
-                        <li className="question-item" >
-                                hey
-                        </li>  
+                        ))}
                     </ul>
                 ) : (
                     <p>No questions found.</p>

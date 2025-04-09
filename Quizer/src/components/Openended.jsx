@@ -47,8 +47,11 @@ const Openended = () => {
                 })
             });
             const result = await response.json();
-            console.log(result);
-            navigate('/dashboard');
+            if (!result.id) {
+              throw new Error("Quiz ID not found in response.");
+            }
+            console.log(result.id);
+            navigate('/assign-quiz', {state:{quizID :result.id }});
             
         }
         catch (error) {

@@ -17,7 +17,6 @@ const Getassignedquiz = ({email ,assignedQuizzes}) => {
       try {
           const response = await fetch(`http://localhost:8080/api/auth/assigned-quizzes?email=${email}`);
           const data = await response.json();
-  
           // Filter out quizzes whose _id is present in userAssignedQuizzes
           const filteredQuizzes = data.filter(
               quiz => assignedQuizzes.includes(quiz._id)
