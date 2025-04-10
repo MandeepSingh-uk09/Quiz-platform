@@ -123,6 +123,7 @@ body {
   max-height: 65vh;
   overflow-y: auto;
   width: 100%;
+  padding-bottom: 20px;
 }
 
 .score-card {
@@ -172,17 +173,20 @@ body {
 }
 
 .poll-access-count {
+  margin-top: 5px;
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 15px;
+  border-bottom: 1px solid black;
 }
 
 .leaderboard-poll-container {
-  width: 100%;
+  width: 80%;
   margin: auto;
   padding: 15px;
   background: #ededed;
   margin-bottom: 2rem;
+  border-radius: 12px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .leaderboard-poll-question {
@@ -199,6 +203,7 @@ body {
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
+  font-size: 14px;
 }
 
 .leaderboard-option-text {
@@ -242,7 +247,8 @@ body {
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 #f8fafc;
-  width: 100%;
+  width: 80%;
+  margin: 20px auto;
 }
 
 .open-ended-card {
@@ -281,13 +287,38 @@ body {
   
 
   .leaderboard-content {
+    display: flex;
     flex-direction: column;
     gap: 15px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f0f0f0;
   }
+  
+  .leaderboard-content::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .leaderboard-content::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+  }
+  
+  .leaderboard-content::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+    border: 1px solid transparent;
+  }
+  
+  .leaderboard-content::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  
 
   .leaderboard-sidebar {
     flex: none;
     width: 100%;
+    min-width: none;
     padding: 10px;
     position: relative;
     border-radius: 12px;
@@ -297,10 +328,11 @@ body {
   }
 
   .leaderboard-results{
-    height: 50vh;
+    max-height: min-content;
   }
   .leaderboard-scores{
-    height: 40vh;
+    max-height: 100%;
+    overflow-y: hidden;
   }
 
   .quiz-dropdown-menu.open {
@@ -327,16 +359,34 @@ body {
   .leaderboard-sidebar .leaderboard-content.open {
     display: block;
   }
+  
+  .leaderboard-quiz-description{
+    font-size: 22px;
+  }
+
+  .poll-access-count{
+    margin-top: 1rem;
+    font-size: 14px;
+  }
 
   .poll-container {
-    max-height: 35vh;
+    max-height: 100%;
+    overflow-y: hidden;
   }
+
+  .leaderboard-poll-container{
+    width: 100%;
+  }
+
   .open-ended-container{
-    max-height: 45vh;
+    width: 100%;
+    max-height: 100%;
+    overflow-y: hidden;
   }  
+  
 }
 
-@media (max-width: 420px) {
+@media (max-width: 500px) {
   .score-card {
     flex-direction: column;
     align-items: center;
@@ -366,5 +416,12 @@ body {
   .user-email {
     font-size: 12px;
     color: #64748b;
+  }
+
+  .leaderboard-poll-question{
+    font-size: 16px;
+  }
+  .leaderboard-poll-options{
+    font-size: 12px;
   }
 }

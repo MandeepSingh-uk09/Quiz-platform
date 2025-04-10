@@ -32,7 +32,7 @@ const Dashboard = () => {
   return (
     <div className='dashboard'>
         <Navbar />
-        <div className='greeting'>Hello Meandeep , ready to create your own quiz... </div>
+        <div className='greeting'>Hello {username}, ready to create your own quiz... </div>
         <div className='quiz-cards'>
             
             <div className='quiz-card'>

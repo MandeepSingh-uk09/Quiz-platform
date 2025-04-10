@@ -60,42 +60,44 @@ const Landing = () => {
     }
 
   return (
-    <div className='landing-page'>
-      <Navbar />
-      <div className='quiz-status'>
-        <div className='your-quizzes'>
-            <h2> {user.username}, you have created...</h2>
-            <div className='quizs-detail'>
-                {quizcount.map((quiz, index) => (
-                    <div key={index} className="quizs-card" onClick={()=>{setVisibility("true");setQuiztype(quiz.quizType)}}>
-                    <div className="card-heading">{quiz.quizType}</div>
-                    <div className="number-of-quiz">{quiz.count}</div>
-                    </div>
-                ))}
-            </div>
-            <div className='quiz-btn' onClick={()=>{navigate('/dashboard')}}>Create Quiz</div>
-        </div>
-        <div className='assigned-quizzes'>
-            <div className='aq-heading'>Take Quiz
-                <div className='aq-type'>
-                    <div className={`aq-all ${selected? "": "selected"}`} onClick={()=>{toggleSelected("all")}}>
-                        Open Quizzes
-                    </div>
-                    <div className={`aq-assigned ${selected? "selected": ""}`} onClick={()=>{toggleSelected("assigned")}}>
-                        Assigned Quizes {`(${assignedQuizzes.length})`}
-                    </div>                    
+    <div className='landing-container'>
+        <div className='landing-page'>
+        <Navbar />
+        <div className='quiz-status'>
+            <div className='your-quizzes'>
+                <h2> {user.username}, you have created...</h2>
+                <div className='quizs-detail'>
+                    {quizcount.map((quiz, index) => (
+                        <div key={index} className="quizs-card" onClick={()=>{setVisibility("true");setQuiztype(quiz.quizType)}}>
+                        <div className="card-heading">{quiz.quizType}</div>
+                        <div className="number-of-quiz">{quiz.count}</div>
+                        </div>
+                    ))}
                 </div>
+                <div className='quiz-btn' onClick={()=>{navigate('/dashboard')}}>Create Quiz</div>
             </div>
-            <>
-            {selected ?  
-            <Getassignedquiz email={email} assignedQuizzes={assignedQuizzes}/>
-            :
-            <Takequiz email={email} userAssignedQuizzes={assignedQuizzes}/>
-            }
-            </>
+            <div className='assigned-quizzes'>
+                <div className='aq-heading'>Take Quiz
+                    <div className='aq-type'>
+                        <div className={`aq-all ${selected? "": "selected"}`} onClick={()=>{toggleSelected("all")}}>
+                            Open Quizzes
+                        </div>
+                        <div className={`aq-assigned ${selected? "selected": ""}`} onClick={()=>{toggleSelected("assigned")}}>
+                            Assigned Quizes {`(${assignedQuizzes.length})`}
+                        </div>                    
+                    </div>
+                </div>
+                <>
+                {selected ?  
+                <Getassignedquiz email={email} assignedQuizzes={assignedQuizzes}/>
+                :
+                <Takequiz email={email} userAssignedQuizzes={assignedQuizzes}/>
+                }
+                </>
+            </div>
         </div>
-      </div>
-      {visibility==="true"? <Detailedquiz visibility={visibility} setVisibility={setVisibility} quiztype={quiztype} email={email}/>: ""}
+        {visibility==="true"? <Detailedquiz visibility={visibility} setVisibility={setVisibility} quiztype={quiztype} email={email}/>: ""}
+        </div>
     </div>
   )
 }

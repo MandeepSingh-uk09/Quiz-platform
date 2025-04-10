@@ -1,23 +1,25 @@
 /* General Styles */
+
+.landing-container {
+    width: 100vw;
+}
 .landing-page {
     box-sizing: border-box;
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f4f4f4;
+    background-color: #edf2f7;
 }
 
 .quiz-status {
-    box-sizing: border-box;
-    padding: 2rem;
+    padding: 30px 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 30px;
+    gap: 50px;
     width: 100%;
-    min-height: 80vh;
 }
 
 .your-quizzes {
@@ -69,6 +71,7 @@
 .quizs-card {
     margin-top: 1rem;
     width: 120px;
+    min-height: min-content;
     aspect-ratio: 1 / 1;
     background-color: #ececec;
     display: flex;
@@ -111,7 +114,7 @@
     align-items: center;
     padding-bottom: 20px;
     font-size: 1rem;
-    max-height: 70vh;
+    height: 75vh;
     box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.2);
     overflow-y: scroll;    
     scrollbar-width: thin;
@@ -184,17 +187,94 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  
     .quiz-status {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+  
+    .your-quizzes {
+      width: 100%;
+      max-width: 100%;
+      box-shadow: none;
+      border: 1px solid #ccc;
+      padding: 1rem;
+    }
+  
+    .your-quizzes > h2 {
+      font-size: 1.25rem;
+      padding-bottom: 6px;
+      text-align: center;
+    }
+  
+    .quizs-detail {
         flex-direction: column;
+        justify-content: center;
         align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
     }
-
-    .your-quizzes,
-    .assigned-quizzes {
-        width: 90%;
-    }
-
+  
     .quizs-card {
-        width: 100px;
+        height: 3rem;
+        width: 80%;
+        aspect-ratio: 0;
+        flex-direction: row;
+        font-size: 0.8rem;
+        justify-content: space-between;
+        padding: 20px;
     }
-}
+  
+    .card-heading {
+      font-size: 1rem;
+    }
+  
+    .number-of-quiz {
+        margin: 0;
+      font-size: 1.1rem;
+      margin-left: 1rem;
+    }
+  
+    .quiz-btn {
+      width: 90%;
+      margin: 2rem auto;
+      font-size: 1rem;
+      padding: 12px;
+    }
+  
+    .assigned-quizzes {
+      max-height: none;
+      overflow: visible;
+      font-size: 0.9rem;
+    }
+  
+    .aq-heading {
+      font-size: 1.1rem;
+    }
+  
+    .aq-type div {
+      font-size: 0.9rem;
+      padding: 10px;
+    }
+  }
+  
+  @media (max-width: 500px) {
+    .your-quizzes > h2 {
+        font-size: 1rem;
+      }
+  
+    .quiz-btn {
+      font-size: 0.9rem;
+      padding: 10px;
+    }
+  
+    .aq-type div {
+      font-size: 0.8rem;
+      padding: 8px 0;
+    }
+
+    .assigned-quizzes{
+        min-width: unset;
+        width: 100%;
+    }
+  }

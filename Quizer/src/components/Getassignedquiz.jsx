@@ -46,7 +46,7 @@ const Getassignedquiz = ({email ,assignedQuizzes}) => {
       </>
       : 
         <div className='assigned-quiz-msg'>
-          No assigned quizzes are available.
+          Quizzes are not assigned to you yet.
         </div>
       }
     </>

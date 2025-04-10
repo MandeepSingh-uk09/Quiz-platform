@@ -42,20 +42,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-    .quiz-status {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .your-quizzes,
-    .assigned-quizzes {
-        width: 90%;
-    }
-
-    .quizs-card {
-        width: 100px;
-    }
+@media (max-width: 500px) {    
 
     .q-detail {
         flex-direction: column;

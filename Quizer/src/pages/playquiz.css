@@ -171,7 +171,25 @@
     align-items: center;
     box-shadow: 0 4px 15px rgba(111, 66, 193, 0.5);
   }
+
+  .oe-complete{
+    background: transparent;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    color: white;
+  }
   
+  .poll-complete{
+    background: transparent;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    color: white;
+  }
+
   .re-score h3 {
     font-size: 1.8rem;
     margin-bottom: 10px;

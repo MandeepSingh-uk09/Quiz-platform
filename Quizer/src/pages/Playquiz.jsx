@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import "./playquiz.css";
 
 const Playquiz = () => {
@@ -179,14 +180,28 @@ const Playquiz = () => {
           )}
         </div>)
         : 
-        (displayResult && quizType !== "Poll Quiz" && (
-          <div className="result">
-            <div className="re-score">
-              <h3>Score</h3>
-              <div>{score}</div>
+        (displayResult && (
+          quizType !== "Poll Quiz" ? (
+            <div className="result">
+              <div className="re-score">
+                <h3>Score</h3>
+                <div>{score}</div>
+              </div>
+              <div className="close-btn" onClick={() => navigate('/landing')}>Done</div>
             </div>
-            <div className="close-btn" onClick={() => navigate('/landing')}>Done</div>
-          </div>
+          ) : (
+            <div className="result">
+            <div className="poll-complete">
+            <DotLottieReact
+                src="https://lottie.host/0f02feb9-81b6-4795-a12b-3cd4385ec201/5mMaSvXVYK.lottie"
+                loop
+                autoplay
+                speed={1.2}
+              />
+            </div>
+          <div className="close-btn" onClick={() => navigate('/landing')}>Done</div>
+        </div>
+          )
         ))
         }
       </div>
@@ -194,6 +209,7 @@ const Playquiz = () => {
     : 
     <div className="play-quiz">
       <div className="bg">
+      { !displayResult?
         <div className="player">
           {questions ? (
             <>
@@ -212,7 +228,20 @@ const Playquiz = () => {
           ) : (
             <p>Loading quiz...</p>
           )}
-        </div>        
+        </div>
+        : 
+        <div className="result">
+          <div className="oe-complete">
+          <DotLottieReact
+              src="https://lottie.host/0f02feb9-81b6-4795-a12b-3cd4385ec201/5mMaSvXVYK.lottie"
+              loop
+              autoplay
+              speed={1.2}
+            />
+          </div>
+          <div className="close-btn" onClick={() => navigate('/landing')}>Done</div>
+        </div>
+      }
       </div>
     </div>
     }

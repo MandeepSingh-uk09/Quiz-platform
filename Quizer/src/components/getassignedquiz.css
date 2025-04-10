@@ -41,20 +41,7 @@
     margin-top: 20px;
 }
 /* Responsive Design */
-@media (max-width: 768px) {
-    .assigned-quiz-status {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .assigned-your-quizzes,
-    .assigned-assigned-quizzes {
-        width: 90%;
-    }
-
-    .assigned-quizs-card {
-        width: 100px;
-    }
+@media (max-width: 500px) {
 
     .assigned-q-detail {
         flex-direction: column;

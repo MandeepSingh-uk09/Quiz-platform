@@ -68,7 +68,7 @@ const Detailedquiz = ({visibility,setVisibility ,quiztype, email}) => {
                         ))}
                     </ul>
                 ) : (
-                    <p>No quizzes found.</p>
+                    <p className='not-found'>No quizzes found.</p>
                 )}
             </div>
             : 

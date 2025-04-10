@@ -193,9 +193,9 @@ const Leaderboard = () => {
           </div>
         ) : leaderboardQuizType === "Poll Quiz" ? (
           <div className="leaderboard-results">
-            <h2 className="leaderboard-results-title">Poll Quiz Results</h2>
+            <h2 className="leaderboard-results-title">Poll Responses</h2>
             <h4 className="leaderboard-quiz-description">{quizDescription} {assignedStatus? "( Assigned )":""}</h4>            
-            <p className="poll-access-count">Total Access Count: {pollData.accessCount}</p>
+            <p className="poll-access-count">Total Access Count: {pollData ?pollData.accessCount : 0}</p>
             {pollData ? (
               <div className="poll-container">
                 {pollData.questions.map((question, qIndex) => (
@@ -206,7 +206,7 @@ const Leaderboard = () => {
                     <div className="leaderboard-poll-options">
                       {question.options.map((option, oIndex) => (
                         <div key={oIndex} className="leaderboard-option-text">
-                          {option.text} ({option.votes} votes)
+                          {option.text} ({option.votes})
                         </div>
                       ))}
                     </div>
