@@ -41,7 +41,8 @@ router.post('/signup', upload.single('photo') ,async (req, res) => {
         const savedUser = await signupUserDao(userData , fileName);
         res.status(200).json(savedUser);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        console.error("Signup Error:", error.message);
+        res.status(400).json({ message: error.message, type: "error" });
     }
 });
 
@@ -51,9 +52,13 @@ router.post('/login', async (req, res) => {
         const isUser = await loginUserDao(userData);
         res.status(200).json(isUser);
     } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-});
+        if(error.message === "email"){          
+          res.status(400).json({ message: "Email does not exist, SignUp", type: "error" });
+        }
+        else if(error.message === "password"){
+          res.status(400).json({ message: "Password is incorrect", type: "warning" });
+      }
+  }});
 
 router.post('/quiz/mcq', authMiddleware, async (req, res) => {
   try {
@@ -461,7 +466,7 @@ router.get("/poll-leaderboard/:quizId", async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
         
-        const users = await User.find({ _id: { $ne: id } }).select("_id username email");
+        const users = await User.find({ _id: { $ne: id } }).select("_id username email photo");
 
         res.status(200).json(users);
     } catch (error) {

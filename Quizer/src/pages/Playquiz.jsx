@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import "./playquiz.css";
+import ConsentScreen from "../components/ConsentScreen";
 
 const Playquiz = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = location.state || {};
+
+  const [startQuiz, setStartQuiz] = useState(false);
 
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -146,6 +148,8 @@ const Playquiz = () => {
 
   return (
     <>
+    {startQuiz?
+    <>
     {(quizType !== "Open-Ended")?
     <div className="play-quiz">
       <div className="bg">
@@ -192,13 +196,9 @@ const Playquiz = () => {
           ) : (
             <div className="result">
             <div className="poll-complete">
-            <DotLottieReact
-                src="https://lottie.host/0f02feb9-81b6-4795-a12b-3cd4385ec201/5mMaSvXVYK.lottie"
-                loop
-                autoplay
-                speed={1.2}
-              />
+              <video className="success-video" src="http://localhost:8080/uploads/Success.webm" autoPlay loop muted />
             </div>
+            <h4 className="success-heading">Response Collected Successfully</h4>
           <div className="close-btn" onClick={() => navigate('/landing')}>Done</div>
         </div>
           )
@@ -232,18 +232,18 @@ const Playquiz = () => {
         : 
         <div className="result">
           <div className="oe-complete">
-          <DotLottieReact
-              src="https://lottie.host/0f02feb9-81b6-4795-a12b-3cd4385ec201/5mMaSvXVYK.lottie"
-              loop
-              autoplay
-              speed={1.2}
-            />
+            <video className="success-video" src="http://localhost:8080/uploads/Consent.webm" autoPlay loop muted />
           </div>
+          <h4 className="success-heading">Response Collected Successfully</h4>
           <div className="close-btn" onClick={() => navigate('/landing')}>Done</div>
         </div>
       }
       </div>
     </div>
+    }
+    </>
+    : 
+    <ConsentScreen onStart={()=>{setStartQuiz(true)}}/>
     }
     </>
   );

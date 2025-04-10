@@ -31,12 +31,12 @@ exports.loginUserService = async ({ email, password }) => {
     console.log("user .. ",existingUser);
     
     if (!existingUser) {
-      throw new Error('Email Does Not Exist');
+      throw new Error('email');
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
     if (!isPasswordCorrect) {
-      throw new Error('Invalid Credentials');
+      throw new Error('password');
     }
 
     

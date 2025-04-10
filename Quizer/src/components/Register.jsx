@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { FaUser } from 'react-icons/fa';
+import AlertBox from './AlertBox';
 import "./register.css";
 
 const Register = ({ toggleAuth }) => {
+
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage]= useState("");
+    const [alertType, setAlertType] = useState("info");
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -35,7 +41,9 @@ const Register = ({ toggleAuth }) => {
         e.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match!");
+            setAlertMessage("Passwords did not match!");
+            setAlertType("info");
+            setShowAlert(true);
             return;
         }
 
@@ -47,16 +55,31 @@ const Register = ({ toggleAuth }) => {
             data.append("photo", photo);
         }
 
-        const response = await fetch("http://localhost:8080/api/auth/signup", {
-            method: "POST",
-            body: data,
-        });
+        try{
+            const response = await fetch("http://localhost:8080/api/auth/signup", {
+                method: "POST",
+                body: data,
+            });
+    
+            if (response.ok) {
+                const resData = await response.json();
+                const getID = resData._id;
+                assignUserQuiz(getID);
+                toggleAuth();
+            }
+            else {
+                // Better error handling for failed responses
+                const errorData = await response.json();
+                console.log(errorData);
+                console.error("Signup failed:", errorData.message);
+                setAlertMessage(errorData.message);
+                setAlertType(errorData.type || "error");
+                setShowAlert(true);
 
-        if (response.ok) {
-            const resData = await response.json();
-            const getID = resData._id;
-            assignUserQuiz(getID);
-            toggleAuth();
+            }
+        } catch (error){
+            console.log("Error in registration",error);
+            alert("Something went wrong during registration. Please try again.");
         }
     };
 
@@ -75,6 +98,7 @@ const Register = ({ toggleAuth }) => {
     };
 
     return (
+        <>
         <div className="auth-form-container">
             <form onSubmit={handleRegister} encType="multipart/form-data">
                 <h2>Register</h2>
@@ -95,6 +119,10 @@ const Register = ({ toggleAuth }) => {
             </form>
             <p>Have an account? <span className="auth-toggle" onClick={toggleAuth}>Login</span></p>
         </div>
+        {showAlert && (<AlertBox message={alertMessage} type={alertType}  onClose={() => setShowAlert(false)}
+        />
+      )}
+        </>
     );
 };
 

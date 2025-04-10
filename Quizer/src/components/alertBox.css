@@ -1,0 +1,79 @@
+/* Fullscreen translucent overlay */
+.alert-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.4); /* translucent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(2px); /* optional blur effect */
+  }
+  
+  /* The actual alert box */
+  .alert-box {
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    padding: 20px 24px;
+    max-width: 90%;
+    width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+    position: relative;
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+  
+  /* Close button */
+ .alert-close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    color: inherit;
+  }
+  
+  /* Alert types */
+  .alert-box.success {
+    background-color: #d1f7d6;
+    color: #256029;
+    border-color: #a3e4a8;
+  }
+  
+  .alert-box.error {
+    background-color: #fddede;
+    color: #721c24;
+    border-color: #f5c6cb;
+  }
+  
+  .alert-box.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-color: #ffeeba;
+  }
+  
+  .alert-box.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-color: #bee5eb;
+  }
+  
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  

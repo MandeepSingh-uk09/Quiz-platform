@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./assignquiz.css";
+import { FaUser } from 'react-icons/fa';
 import { useLocation , useNavigate} from 'react-router-dom';
 
 const Assignquiz = () => {
@@ -163,7 +164,9 @@ const Assignquiz = () => {
                     readOnly
                   />
                   <div className='user-info'>
-                    <div className='user-pic'></div>
+                    <div className='user-pic'>
+                      { user.photo? <img src={`http://localhost:8080/uploads/${user.photo}`} alt={`${user.photo}`} />: <FaUser size={20} color='#ccc' /> }                      
+                    </div>
                     <div className='user-detail'>
                       <h4 className='user-name'>{user.username}</h4>
                       <span className='user-email'>{user.email}</span>
