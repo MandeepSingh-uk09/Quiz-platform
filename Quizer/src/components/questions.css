@@ -1,13 +1,17 @@
 .no-of-questions {
-    width: 10%;
-    min-width: 80px;
-    background-color: #fff;
+    width: 20%;
+    min-width: 240px;
+    background-color: #fffffffc;
     height: 90vh;
     border-right: 2px solid #004d40;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1rem 0;
+  }
+
+  .no-of-questions.none{
+    display: none;
   }
   
   /* Heading */
@@ -47,11 +51,26 @@
     background: #e0f2f1;
 }
   
+.que-question{
+  position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 200px;
+    background-color: #e0f2f1;
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 1rem;
+    color: #004d40;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
   /* Question Number Styling */
   .que-count {
     background-color: #b5d3d2;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     padding: 10px;
     border-radius: 50%;
     display: flex;
@@ -63,37 +82,101 @@
     transition: all 0.3s ease;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
   }
+
+  .que-text{
+    width: 60%;
+    font-size: 14px;
+    color: #004d40;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   
   .que-count:hover {
     background-color: #004d40;
     color: white;
     transform: scale(1.1);
   }
+  .question-delete-btn{
+    position: absolute;
+    right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #8a8a8a;
+    text-align: right;
+    display: block;
+    transition: color 0.3s;
+  }
+
+  .question-delete-btn:hover {
+    color: rgb(200, 4, 4);
+    transform: scale(1.2);
+  }
+
+  .dropdown-toggle-container {
+    box-sizing: border-box;
+    display: none;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .dropdown-toggle-btn {
+    background-color: #004d40;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .dropdown-toggle-btn:hover {
+    background-color: #00695c;
+  }
   
   /* Responsive Adjustments */
-@media (max-width: 768px) {
-    
+@media (max-width: 768px) {    
+
     .no-of-questions {
-      width: 100%;
-      height: auto;
-      border-right: none;
-      border-bottom: 2px solid #004d40;
-      justify-content: center;
-      overflow-x: auto;
-      padding: 0.5rem;
+      display: none;
+    }
+
+    .no-of-questions.dropdown-open {
+      display: flex;
+      position: absolute;
+      top: 150px;
+      z-index: 999;
+      background-color: #ffffff;
+      border: 2px solid #004d40;
+      border-radius: 12px;
+      padding: 1rem;
+      width: 95%;
+      max-height: 70vh;
+      flex-direction: column;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
     }
   
     .questions-count {
-       max-width: 90vw;
-        flex-direction: row;
+        width: 100%;
+        align-items: center;
         max-height: none;
-        overflow-y: hidden;
-        overflow-x: auto; /* Enables horizontal scrolling on small screens */
+        overflow-y: scroll;
+        overflow-x: hidden; /* Enables horizontal scrolling on small screens */
         white-space: nowrap; /* Prevents wrapping */
     }
 
     .questions-count::-webkit-scrollbar {
-        height: 5px; /* Custom scrollbar for horizontal scrolling */
+        width: 5px; /* Custom scrollbar for horizontal scrolling */
+    }
+
+    .que-question{
+      box-sizing: border-box;
+      width: 80%;
+      min-width: 230px;
     }
   
     .que-heading {
@@ -106,13 +189,23 @@
       font-size: 0.9rem;
       padding: 0 1.2rem;
     }
+
+    .dropdown-toggle-container {
+      display: block;
+    }
+    
+    .dropdown-toggle-container.none {
+      display: none;
+    }
+    
+      
   }
   
   @media (max-width: 480px) {
     .que-count {
-      width: 2rem;
-      height: 2rem;
-      font-size: 0.9rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: 12px;
     }
   
     .que-heading {

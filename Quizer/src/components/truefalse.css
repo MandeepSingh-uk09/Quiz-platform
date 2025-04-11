@@ -16,7 +16,7 @@
     width: 60%;
     background-color: white;
     min-height: 60vh;
-    margin: 2rem auto;
+    margin: 4rem auto 0;
     border-radius: 12px;
     padding: 1.5rem 2rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
@@ -127,6 +127,8 @@
   }
   
   .tf-quiz-description h3 {
+    width: 80%;
+    margin: auto;
     font-size: 18px;
     margin-bottom: 12px;
     color: #333;
@@ -135,7 +137,7 @@
   }
   
   .tf-quiz-description input {
-    width: 100%;
+    width: 80%;
     height: 4rem;
     padding: 10px;
     border: 1px solid #ccc;
@@ -171,6 +173,19 @@
     background-color: #0056b3;
   }
   
+  .tf-description-close-btn {
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    color: black;
+  }
+  
+  .tf-description-close-btn:hover{
+    color: #909090;
+  }
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .tf-quiz-create {
@@ -179,6 +194,7 @@
     } 
 
     .tf-add-question {
+      margin-top: 1rem;
       width: 95%;
       padding: 1rem;
     }

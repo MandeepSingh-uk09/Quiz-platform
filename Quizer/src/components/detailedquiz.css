@@ -86,11 +86,12 @@
 
 .quiz-item-desc {
     flex-grow: 1;
+    width: 50%;
     font-size: 16px;
     color: #444;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .delete-icon {
@@ -164,8 +165,6 @@
     }
 
     .quiz-item {
-        flex-direction: column;
-        align-items: flex-start;
         padding: 10px;
     }
 

@@ -1,4 +1,3 @@
-
 .mcq-quiz-page{
   display: flex;
   flex-direction: column;
@@ -17,7 +16,6 @@
 .mcq-add-question {
   width: 60%;
   background-color: white;
-  min-height: 60vh;
   margin: 2rem auto;
   border-radius: 1rem;
   padding: 1rem 2rem;
@@ -127,6 +125,8 @@
 }
 
 .mcq-quiz-description h3 {
+  width: 80%;
+  margin: auto;
   font-size: 18px;
   margin-bottom: 12px;
   color: #333;
@@ -135,7 +135,7 @@
 }
 
 .mcq-quiz-description input {
-  width: 100%;
+  width: 80%;
   height: 4rem;
   padding: 10px;
   border: 1px solid #ccc;
@@ -171,6 +171,20 @@
   background-color: #0056b3;
 }
 
+.mcq-description-close-btn {
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  color: black;
+}
+
+.mcq-description-close-btn:hover{
+  color: #909090;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .mcq-quiz-create {
@@ -178,19 +192,41 @@
     align-items: center;
   } 
   .mcq-add-question {
+    margin: 0;
+    margin-top: 1rem;
     width: 95%;
     padding: 1rem;
   }
-  .mcq-option {
+  .mcq-question-type{
+    margin: 0 auto;
+    font-size: 1rem;
+  }
+  .mcq-question{
+    width: 90%;
+    margin: 0 5%;
+    padding-bottom: 0;
+  }
+  .mcq-options{
     width: 100%;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .mcq-option {
+    width: 90%;
+    font-size: 1rem;
+  }
+  .mcq-info{
+    font-size: 14px;
   }
   .mcq-save-next {
+    margin: 0.5rem ;
     flex-direction: column;
     gap: 0.5rem;
   }
   .mcq-save-next button {
     width: 100%;
-    max-width: 100%;
+    max-width: 80%;
+    margin: auto;
   }
 }
 

@@ -2,8 +2,16 @@ import React, { useEffect, useState } from 'react';
 import "./assignquiz.css";
 import { FaUser } from 'react-icons/fa';
 import { useLocation , useNavigate} from 'react-router-dom';
+import AlertBox from '../components/AlertBox';
 
 const Assignquiz = () => {
+
+  
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("info");
+  const [alertButton, setAlertButton] = useState(false);
+  const [btnType, setBtnType] = useState("done");
 
   const naviagte = useNavigate();
 
@@ -13,6 +21,7 @@ const Assignquiz = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [checkedUsers, setCheckedUsers] = useState({});
   const [assignAll, setAssignAll] = useState(false);
+  const [openAll,setOpenAll] = useState(false);
 
   const [assignQuiz,setAssignQuiz] = useState({});
 
@@ -54,9 +63,24 @@ const Assignquiz = () => {
     setSearchTerm("");
   };
 
+  const handleOpenAll = () => {
+    setOpenAll(prev => {
+      const newOpenAll = !prev;
+      if (newOpenAll) {
+        setCheckedUsers({});
+        setAssignAll(false); // Also deselect assignAll if you want only one mode active
+      }
+      return newOpenAll;
+    });
+  };
+
   const handleAssignAll = () => {
-    setAssignAll(!assignAll);
-    setCheckedUsers(assignAll ? {} : Object.fromEntries(users.map(user => [user._id, true])));
+    setAssignAll(prev => {
+      const newAssignAll = !prev;
+      setCheckedUsers(newAssignAll ? Object.fromEntries(users.map(user => [user._id, true])) : {});
+      if (newAssignAll) setOpenAll(false); // Deselect "Open to all"
+      return newAssignAll;
+    });
   };
 
   const toggleUserSelection = (userId) => {
@@ -64,6 +88,7 @@ const Assignquiz = () => {
       ...prev,
       [userId]: !prev[userId]
     }));
+    setOpenAll(false);
   };
 
   const updateQuizToassigned = async (quizID) => {
@@ -79,7 +104,12 @@ const Assignquiz = () => {
       });
 
       if(response.ok){
-        naviagte("/landing");
+        const message = "Quiz is now Assigned to users!!"          
+        setAlertMessage(message);
+        setAlertType("success");
+        setAlertButton(true);
+        setBtnType("done");
+        setShowAlert(true);
       }
 
     }catch(err){
@@ -91,6 +121,7 @@ const Assignquiz = () => {
 
   const assignQuizToUser = async(data) => {
     console.log(data);   
+    
     try{
         const response = await fetch(`http://localhost:8080/api/auth/set-assign-quiz-to-user`, {
             method: "POST",
@@ -101,10 +132,15 @@ const Assignquiz = () => {
         });
 
         if(response.ok){
-            console.log("heer1")
+          updateQuizToassigned(quizID);
         }
-        console.log("heer2")
-        updateQuizToassigned(quizID);
+        else{
+          const message = "Something went wrong.please try again later!"          
+          setAlertMessage(message);
+          setAlertType("error");
+          setShowAlert(true);
+        }
+        
     }catch(err){
         console.log("error in assigning quiz",err)
     }
@@ -112,19 +148,28 @@ const Assignquiz = () => {
   }
 
   const handleDone = () => {
-    /* handleAssignQuiz(); */    
-    const newAssignQuiz = {};
-    Object.keys(checkedUsers).forEach(userId => {
-    if (checkedUsers[userId]===true) {
-        newAssignQuiz[userId] = quizID;
-    }
-    });
-    console.log(newAssignQuiz);
-    setAssignQuiz(newAssignQuiz);
-    
-    if (Object.keys(newAssignQuiz).length > 0) {
-        assignQuizToUser(newAssignQuiz);
-    }
+      const newAssignQuiz = {};
+      Object.keys(checkedUsers).forEach(userId => {
+      if (checkedUsers[userId]===true) {
+          newAssignQuiz[userId] = quizID;
+      }
+      });
+      console.log(newAssignQuiz);
+      setAssignQuiz(newAssignQuiz);
+      
+      if (Object.keys(newAssignQuiz).length > 0) {
+          assignQuizToUser(newAssignQuiz);
+      
+      }
+      else{
+        console.log("here");
+        const message = "Quiz is now open to ALL!!!"          
+        setAlertMessage(message);
+        setAlertType("success");
+        setAlertButton(true);
+        setBtnType("done");
+        setShowAlert(true);
+      }
   };
 
   /* const handleAssignQuiz = () =>{
@@ -132,6 +177,7 @@ const Assignquiz = () => {
   } */
 
   return (
+    <>
     <div className='assign-quiz'>
       <div className='assign-quiz-container'>
         <h1 className='quiz-title'>Assign Your Quiz</h1>
@@ -183,6 +229,14 @@ const Assignquiz = () => {
         <div className='assign-all'>
           <input 
             type='checkbox' 
+            id='open-for-all' 
+            className='assign-all-checkbox' 
+            checked={openAll} 
+            onChange={handleOpenAll} 
+          />
+          <label htmlFor='open-for-all' className='assign-all-label'>Open to all</label>
+          <input 
+            type='checkbox' 
             id='assign-all' 
             className='assign-all-checkbox' 
             checked={assignAll} 
@@ -194,6 +248,14 @@ const Assignquiz = () => {
         <button className='assign-btn' onClick={()=>{handleDone()}} >Done</button>
       </div>
     </div>
+    {showAlert && (
+        <AlertBox 
+        message={alertMessage} type={alertType} onClose={() => setShowAlert(false)}
+        button={alertButton} btnType={btnType} btnFunction={() => {naviagte("/landing");}}
+        
+        />
+      )}
+    </>
   );
 };
 

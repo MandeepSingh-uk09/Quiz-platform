@@ -17,7 +17,7 @@
 width: 60%;
   background-color: white;
   min-height: 60vh;
-  margin: 2rem auto;
+  margin: 4rem auto 0;
   border-radius: 1rem;
   padding: 1rem 2rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -119,6 +119,8 @@ width: 60%;
 }
 
 .poll-quiz-description h3 {
+    width: 80%;
+    margin: auto;
     font-size: 1.2rem;
     margin-bottom: 12px;
     color: #333;
@@ -127,7 +129,7 @@ width: 60%;
 }
 
 .poll-quiz-description input {
-    width: 100%;
+    width: 80%;
     height: 4rem;
     padding: 10px;
     border: 1px solid #ccc;
@@ -157,7 +159,21 @@ width: 60%;
 .poll-quiz-description button:hover {
     background-color: #0056b3;
 }
+  
+  .poll-description-close-btn {
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    color: black;
+  }
 
+  .poll-description-close-btn:hover{
+    color: #909090;
+  }
+  
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
@@ -167,6 +183,7 @@ width: 60%;
       } 
 
     .poll-add-question {
+        margin-top: 1rem;
         width: 95%;
         padding: 1rem;
     }
@@ -184,14 +201,16 @@ width: 60%;
 @media screen and (max-width: 480px) {
     .poll-quiz-description {
         width: 95%;
-        height: auto;
         padding: 15px;
-    }
-    .poll-quiz-description input {
-        width: 90%;
-        height: 35px;
-    }
-    .poll-quiz-description button {
-        width: 50%;
-    }
+      }
+      .poll-quiz-description h3 {
+        font-size: 16px;
+      }
+      .poll-quiz-description input {
+        font-size: 14px;
+      }
+      .poll-quiz-description button {
+        font-size: 14px;
+        width: 80%;
+      }
 }

@@ -20,7 +20,7 @@ const Navbar = () => {
   return (
     <div className="navbar">
       {/* Logo */}
-      <div className="logo">Quizer</div>
+      <div className="logo" onClick={() => {navigate('/landing')}}>Quizer</div>
 
       {/* Menu Button (Visible on Small Screens) */}
       <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
